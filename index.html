@@ -3251,22 +3251,22 @@ async function renderMissingPage(container) {
       list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🎉</div><p>没有缺失项</p></div>';
     } else {
       list.innerHTML = issues.map(issue => {
-        const exp = (appData.experiences.experiences || []).find(e => e.id === issue.id);
+        const exp = (appData.experiences.experiences || []).find(e => String(e.id) === String(issue.id));
         if (!exp) return '';
-        
-        const missingMats = issue.missing_materials.map(m =>
+
+        const missingMats = (issue.missing_materials || []).map(m =>
           `<div style="display:flex;align-items:center;gap:6px;margin:4px 0;font-size:13px;color:var(--danger)"><span>❌</span> ${m}</div>`
         ).join('');
-        
-        const needsConfirm = issue.needs_confirm.map(c =>
+
+        const needsConfirm = (issue.needs_confirm || []).map(c =>
           `<div style="display:flex;align-items:center;gap:6px;margin:4px 0;font-size:13px;color:var(--warning)"><span>⚠️</span> ${c}</div>`
         ).join('');
-        
+
         return `
           <div style="border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;">
             <div style="font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
-              <span>${exp.name}</span>
-              <span class="tag tag-blue">${CATEGORIES[exp.category] || exp.category}</span>
+              <span>${exp.name || '未命名经历'}</span>
+              <span class="tag tag-blue">${CATEGORIES[exp.category] || exp.category || '未分类'}</span>
             </div>
             ${missingMats}
             ${needsConfirm}
