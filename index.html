@@ -2654,18 +2654,18 @@ function startAddMaterials() {
 // ======== Dashboard Page ========
 
 async function renderDashboardPage(container) {
-  const exps = appData.experiences.experiences || [];
+  const exps = (appData.experiences && appData.experiences.experiences) || [];
   const totalExps = exps.length;
   const scores = await calculateAllScores();
-  const totalScore = scores.total_score;
-  
+  const totalScore = (scores && scores.total_score) || 0;
+
   let totalMaterials = 0;
-  for (const files of Object.values(appData.materials)) {
-    totalMaterials += files.length;
+  for (const files of Object.values(appData.materials || {})) {
+    totalMaterials += (files && files.length) || 0;
   }
-  
-  const issues = checkMissing();
-  const issueCount = issues.length;
+
+  const issues = await checkMissing();
+  const issueCount = (issues && issues.length) || 0;
   
   container.innerHTML = `
     <div class="header">
