@@ -2555,25 +2555,9 @@ function renderRulesConfirmTable() {
   
   for (const cat of extractedRules.categories) {
     const catId = cat.id;
-    html += `
-      <div style="margin-bottom:24px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <h3 style="font-size:16px;">${cat.name} <span class="tag tag-gray">上限 ${cat.max_score}分</span></h3>
-          <button class="btn" onclick="addNewRuleRow('${catId}')">+ 添加规则</button>
-        </div>
-        <div class="table-container">
-          <table class="rule-table">
-            <thead>
-              <tr>
-                <th style="width:40%">加分项目</th>
-                <th style="width:10%">分值</th>
-                <th style="width:10%">上限</th>
-                <th style="width:25%">证明要求</th>
-                <th style="width:15%">状态</th>
-              </tr>
-            </thead>
-            <tbody>
-    `;
+        html += `
+          <div style="margin-bottom:8px;font-size:14px;font-weight:600">${cat.name || '未命名分类'}（上限 ${cat.max_score || 0}分）</div>
+        `;
     
     for (const rule of cat.subcategories) {
       const statusClass = rule.status === '待确认' ? 'tag-orange' : 'tag-green';
@@ -2802,10 +2786,10 @@ async function renderDashboardPage(container) {
           <div class="timeline-item">
             <div class="timeline-dot" style="background:${color}"></div>
             <div class="timeline-content">
-               <div class="timeline-title">${exp.name}</div>
-              <div class="timeline-date">${catName} · ${exp.date}</div>
+              <div class="timeline-title">${exp.name || '未命名经历'}</div>
+              <div class="timeline-date">${catName || '未分类'} · ${exp.date || exp.start_date || exp.end_date || '未设置时间'}</div>
               <div style="margin-top:6px;font-size:13px;">
-                ${exp.achievements ? `<span class="tag tag-blue">${exp.achievements.substring(0, 50)}...</span>` : ''}
+                ${(exp.achievements || exp.achievement) ? `<span class="tag tag-blue">${(exp.achievements || exp.achievement || '').substring(0, 50)}...</span>` : ''}
                 ${exp.tags && exp.tags.length ? exp.tags.slice(0, 3).map(t => `<span class="tag tag-gray">${t}</span>`).join('') : ''}
               </div>
             </div>
@@ -2939,11 +2923,11 @@ async function renderExperiencesTable() {
     
     return `
       <tr>
-        <td><strong>${exp.name}</strong></td>
-        <td><span class="tag tag-blue">${catName}</span></td>
-        <td>${exp.date || '-'}</td>
-        <td>${exp.status || '-'}</td>
-        <td>${exp.achievements ? exp.achievements.substring(0, 30) + '...' : '-'}</td>
+        <td><strong>${exp.name || '未命名经历'}</strong></td>
+        <td><span class="tag tag-blue">${catName || '未分类'}</span></td>
+        <td>${exp.date || exp.start_date || exp.end_date || '-'}</td>
+        <td>${exp.status || exp.role || '-'}</td>
+        <td>${(exp.achievements || exp.achievement) ? (exp.achievements || exp.achievement || '').substring(0, 30) + '...' : '-'}</td>
         <td><strong>${score !== 0 ? (score > 0 ? '+' : '') + score.toFixed(1) : '-'}</strong></td>
         <td>${matStatus}</td>
         <td>
@@ -3186,17 +3170,17 @@ async function renderZongcePage(container) {
   const tbody = document.getElementById('zongceTable');
   if (tbody) {
     tbody.innerHTML = scores.experiences.map(item => {
-      const catName = CATEGORIES[item.category] || item.category;
+      const catName = CATEGORIES[item.category] || item.category || '未分类';
       const rule = getRuleById(item.rule_matched);
-      const ruleName = rule ? rule.name : (item.rule_matched || '未匹配');
+      const ruleName = rule ? (rule.name || '已匹配') : (item.rule_matched || '未匹配');
       const hasRule = !!item.rule_matched;
       const hasScore = item.score > 0;
-      
+
       return `
         <tr>
           <td><span class="tag tag-blue">${catName}</span></td>
-          <td>${item.name}</td>
-          <td>${ruleName}</td>
+          <td>${item.name || '未命名经历'}</td>
+          <td>${ruleName || '未匹配'}</td>
           <td><strong>${hasScore ? (item.score >= 0 ? '+' : '') + item.score.toFixed(1) : '-'}</strong></td>
           <td>
             ${hasRule
@@ -3801,16 +3785,21 @@ function saveExperience() {
     id: editingExpId || generateId(),
     name: name,
     category: category,
+    // Primary fields (new schema)
     start_date: startDate,
     end_date: endDate,
     role: document.getElementById('expRole').value.trim(),
     achievement: document.getElementById('expAchievement').value.trim(),
-    description: document.getElementById('expDescription').value.trim(),
     skills_gained: document.getElementById('expSkills').value.split(',').map(s => s.trim()).filter(s => s),
+    // Compatibility aliases for renderer
+    date: startDate || endDate,
+    status: document.getElementById('expRole').value.trim(),
+    achievements: document.getElementById('expAchievement').value.trim(),
+    tags: document.getElementById('expTags').value.split(',').map(s => s.trim()).filter(s => s),
+    description: document.getElementById('expDescription').value.trim(),
     materials: materials,
     rule_id: document.getElementById('expRuleId').value.trim(),
     quantity: parseInt(document.getElementById('expQuantity').value) || 1,
-    tags: document.getElementById('expTags').value.split(',').map(s => s.trim()).filter(s => s),
     notes: document.getElementById('expNotes').value.trim(),
     created_at: editingExpId ? undefined : new Date().toISOString(),
     updated_at: new Date().toISOString()
