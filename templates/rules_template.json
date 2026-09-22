@@ -1,0 +1,375 @@
+{
+  "说明": "请根据你所在学院的《综合素质测评实施细则》修改以下内容",
+  "示例结构": {
+    "id": "唯一标识符，建议格式：分类_级别_等级",
+    "name": "项目名称",
+    "score": "单项加分值（数字）",
+    "unit": "计分单位：次/项/篇/个",
+    "max_score": "该类别的上限分数",
+    "evidence_required": ["需要的证明材料清单"],
+    "notes": "备注说明，如适用范围、限制条件等"
+  },
+  "categories": [
+    {
+      "id": "academic",
+      "name": "学业成绩",
+      "description": "课程成绩、学术竞赛、论文发表等",
+      "max_score": 30,
+      "subcategories": [
+        {
+          "id": "academic_gpa_top5",
+          "name": "专业排名前5%",
+          "score": 5.0,
+          "unit": "学期",
+          "max_score": 10,
+          "evidence_required": ["成绩单截图"],
+          "notes": "以教务系统排名为准"
+        },
+        {
+          "id": "academic_paper_sci",
+          "name": "SCI/EI论文发表（第一作者）",
+          "score": 10.0,
+          "unit": "篇",
+          "max_score": 20,
+          "evidence_required": ["论文发表证明", "检索报告"],
+          "notes": "需正式见刊或在线发表"
+        }
+      ]
+    },
+    {
+      "id": "competition",
+      "name": "学科竞赛",
+      "description": "数学建模、程序设计、创新创业等各类竞赛",
+      "max_score": 20,
+      "subcategories": [
+        {
+          "id": "competition_international_1st",
+          "name": "国际级竞赛一等奖",
+          "score": 15.0,
+          "unit": "次",
+          "max_score": 20,
+          "evidence_required": ["获奖证书", "参赛证明"],
+          "notes": "需为教育部认可的竞赛"
+        },
+        {
+          "id": "competition_national_1st",
+          "name": "国家级竞赛一等奖",
+          "score": 8.0,
+          "unit": "次",
+          "max_score": 20,
+          "evidence_required": ["获奖证书", "参赛证明"],
+          "notes": "需为中国高等教育学会竞赛目录内赛事"
+        },
+        {
+          "id": "competition_national_2nd",
+          "name": "国家级竞赛二等奖",
+          "score": 6.0,
+          "unit": "次",
+          "max_score": 20,
+          "evidence_required": ["获奖证书", "参赛证明"],
+          "notes": ""
+        },
+        {
+          "id": "competition_national_3rd",
+          "name": "国家级竞赛三等奖",
+          "score": 4.0,
+          "unit": "次",
+          "max_score": 20,
+          "evidence_required": ["获奖证书", "参赛证明"],
+          "notes": ""
+        },
+        {
+          "id": "competition_provincial_1st",
+          "name": "省级竞赛一等奖",
+          "score": 5.0,
+          "unit": "次",
+          "max_score": 15,
+          "evidence_required": ["获奖证书", "参赛证明"],
+          "notes": ""
+        },
+        {
+          "id": "competition_provincial_2nd",
+          "name": "省级竞赛二等奖",
+          "score": 3.0,
+          "unit": "次",
+          "max_score": 15,
+          "evidence_required": ["获奖证书", "参赛证明"],
+          "notes": ""
+        },
+        {
+          "id": "competition_provincial_3rd",
+          "name": "省级竞赛三等奖",
+          "score": 2.0,
+          "unit": "次",
+          "max_score": 15,
+          "evidence_required": ["获奖证书", "参赛证明"],
+          "notes": ""
+        },
+        {
+          "id": "competition_school_1st",
+          "name": "校级竞赛一等奖",
+          "score": 2.0,
+          "unit": "次",
+          "max_score": 8,
+          "evidence_required": ["获奖证书"],
+          "notes": ""
+        },
+        {
+          "id": "competition_school_2nd",
+          "name": "校级竞赛二等奖",
+          "score": 1.5,
+          "unit": "次",
+          "max_score": 8,
+          "evidence_required": ["获奖证书"],
+          "notes": ""
+        },
+        {
+          "id": "competition_school_3rd",
+          "name": "校级竞赛三等奖",
+          "score": 1.0,
+          "unit": "次",
+          "max_score": 8,
+          "evidence_required": ["获奖证书"],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "research",
+      "name": "科研创新",
+      "description": "科研项目、专利、论文、软著等",
+      "max_score": 15,
+      "subcategories": [
+        {
+          "id": "research_national_project",
+          "name": "主持国家级大创项目",
+          "score": 6.0,
+          "unit": "项",
+          "max_score": 10,
+          "evidence_required": ["立项证明", "结题证书"],
+          "notes": "需顺利结题"
+        },
+        {
+          "id": "research_provincial_project",
+          "name": "主持省级大创项目",
+          "score": 4.0,
+          "unit": "项",
+          "max_score": 8,
+          "evidence_required": ["立项证明", "结题证书"],
+          "notes": "需顺利结题"
+        },
+        {
+          "id": "research_patent_invention",
+          "name": "发明专利（第一发明人）",
+          "score": 8.0,
+          "unit": "项",
+          "max_score": 15,
+          "evidence_required": ["专利证书"],
+          "notes": "需已授权"
+        },
+        {
+          "id": "research_patent_utility",
+          "name": "实用新型专利（第一发明人）",
+          "score": 3.0,
+          "unit": "项",
+          "max_score": 8,
+          "evidence_required": ["专利证书"],
+          "notes": ""
+        },
+        {
+          "id": "research_software",
+          "name": "软件著作权（第一著作权人）",
+          "score": 2.0,
+          "unit": "项",
+          "max_score": 6,
+          "evidence_required": ["软著证书"],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "social_practice",
+      "name": "社会实践",
+      "description": "志愿服务、社会调研、支教、实习等",
+      "max_score": 10,
+      "subcategories": [
+        {
+          "id": "practice_volunteer_40h",
+          "name": "志愿服务满40小时",
+          "score": 2.0,
+          "unit": "学期",
+          "max_score": 6,
+          "evidence_required": ["志愿服务时长证明", "志愿汇截图"],
+          "notes": "以官方平台记录为准"
+        },
+        {
+          "id": "practice_volunteer_excellent",
+          "name": "获评优秀志愿者",
+          "score": 3.0,
+          "unit": "次",
+          "max_score": 6,
+          "evidence_required": ["荣誉证书"],
+          "notes": ""
+        },
+        {
+          "id": "practice_internship_named",
+          "name": "知名企事业实习",
+          "score": 2.0,
+          "unit": "次",
+          "max_score": 4,
+          "evidence_required": ["实习证明"],
+          "notes": "世界500强或行业头部企业"
+        }
+      ]
+    },
+    {
+      "id": "leadership",
+      "name": "学生工作",
+      "description": "班委、学生会、社团、助理等学生干部经历",
+      "max_score": 8,
+      "subcategories": [
+        {
+          "id": "leadership_class_monitor",
+          "name": "班长/团支书",
+          "score": 3.0,
+          "unit": "学期",
+          "max_score": 6,
+          "evidence_required": ["任职证明"],
+          "notes": "需考核合格"
+        },
+        {
+          "id": "leadership_student_union",
+          "name": "学生会主席/副主席",
+          "score": 3.0,
+          "unit": "学期",
+          "max_score": 6,
+          "evidence_required": ["任职证明"],
+          "notes": ""
+        },
+        {
+          "id": "leadership_club_president",
+          "name": "社团负责人",
+          "score": 2.0,
+          "unit": "学期",
+          "max_score": 4,
+          "evidence_required": ["任职证明"],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "talent",
+      "name": "文体活动",
+      "description": "文艺表演、体育赛事、书法绘画等",
+      "max_score": 5,
+      "subcategories": [
+        {
+          "id": "talent_national_1st",
+          "name": "国家级文体比赛一等奖",
+          "score": 5.0,
+          "unit": "次",
+          "max_score": 5,
+          "evidence_required": ["获奖证书"],
+          "notes": ""
+        },
+        {
+          "id": "talent_school_1st",
+          "name": "校级文体比赛一等奖",
+          "score": 2.0,
+          "unit": "次",
+          "max_score": 4,
+          "evidence_required": ["获奖证书"],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "honor",
+      "name": "荣誉称号",
+      "description": "三好学生、优秀学生干部、优秀团员等",
+      "max_score": 10,
+      "subcategories": [
+        {
+          "id": "honor_national",
+          "name": "国家级荣誉称号",
+          "score": 10.0,
+          "unit": "次",
+          "max_score": 10,
+          "evidence_required": ["荣誉证书"],
+          "notes": "如国家奖学金"
+        },
+        {
+          "id": "honor_provincial",
+          "name": "省级荣誉称号",
+          "score": 5.0,
+          "unit": "次",
+          "max_score": 8,
+          "evidence_required": ["荣誉证书"],
+          "notes": ""
+        },
+        {
+          "id": "honor_merit",
+          "name": "校级三好学生/优秀学生干部",
+          "score": 3.0,
+          "unit": "次",
+          "max_score": 6,
+          "evidence_required": ["荣誉证书"],
+          "notes": ""
+        },
+        {
+          "id": "honor_excellent_member",
+          "name": "校级优秀团员",
+          "score": 2.0,
+          "unit": "次",
+          "max_score": 4,
+          "evidence_required": ["荣誉证书"],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "certificate",
+      "name": "技能证书",
+      "description": "英语等级、计算机等级、职业资格证书等",
+      "max_score": 5,
+      "subcategories": [
+        {
+          "id": "cert_cet6",
+          "name": "大学英语六级（550分以上）",
+          "score": 1.0,
+          "unit": "次",
+          "max_score": 1,
+          "evidence_required": ["证书截图"],
+          "notes": ""
+        },
+        {
+          "id": "cert_ielts_7",
+          "name": "雅思7.0及以上",
+          "score": 2.0,
+          "unit": "次",
+          "max_score": 2,
+          "evidence_required": ["成绩单"],
+          "notes": ""
+        },
+        {
+          "id": "cert_computer_2",
+          "name": "计算机二级",
+          "score": 1.0,
+          "unit": "次",
+          "max_score": 1,
+          "evidence_required": ["证书截图"],
+          "notes": ""
+        },
+        {
+          "id": "cert_professional",
+          "name": "专业职业资格证书",
+          "score": 2.0,
+          "unit": "次",
+          "max_score": 4,
+          "evidence_required": ["证书截图"],
+          "notes": "与本专业相关的职业资格"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3981 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#2563eb">
+<meta name="mobile-web-app-capable" content="yes">
+<title>大学生成长档案库</title>
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-light: #dbeafe;
+  --success: #16a34a;
+  --warning: #ea580c;
+  --danger: #dc2626;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-lg: 0 4px 6px rgba(0,0,0,0.1);
+  --radius: 8px;
+  --sidebar-width: 220px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app { display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 10px;
+}
+
+.sidebar-header h1 {
+  font-size: 18px;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.sidebar-header p {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+  font-size: 14px;
+}
+
+.nav-item:hover { background: var(--primary-light); }
+.nav-item.active {
+  background: var(--primary-light);
+  border-left-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.badge {
+  margin-left: auto;
+  background: var(--danger);
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* Main Content */
+.main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 24px;
+  max-width: calc(100vw - var(--sidebar-width));
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h2 { font-size: 24px; font-weight: 700; }
+.header-actions { display: flex; gap: 10px; }
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.card-title {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.card-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.card-value.primary { color: var(--primary); }
+.card-value.success { color: var(--success); }
+.card-value.warning { color: var(--warning); }
+.card-value.danger { color: var(--danger); }
+
+.card-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Progress bars */
+.progress-section { margin-bottom: 24px; }
+
+.progress-item { margin-bottom: 16px; }
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.progress-fill.primary { background: var(--primary); }
+.progress-fill.success { background: var(--success); }
+.progress-fill.warning { background: var(--warning); }
+
+/* Buttons */
+.btn {
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:hover { background: var(--bg); }
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.btn-primary:hover { background: #1d4ed8; }
+
+.btn-success {
+  background: var(--success);
+  color: white;
+  border-color: var(--success);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+  border-color: var(--danger);
+}
+
+.btn-warning {
+  background: var(--warning);
+  color: white;
+  border-color: var(--warning);
+}
+
+/* Table */
+.table-container {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: var(--bg);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+tr:hover { background: var(--bg); }
+
+/* Tags */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 2px;
+}
+
+.tag-blue { background: var(--primary-light); color: var(--primary); }
+.tag-green { background: #dcfce7; color: var(--success); }
+.tag-orange { background: #ffedd5; color: var(--warning); }
+.tag-red { background: #fee2e2; color: var(--danger); }
+.tag-gray { background: var(--border); color: var(--text-secondary); }
+.tag-purple { background: #f3e8ff; color: #7c3aed; }
+
+/* Status */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.green { background: var(--success); }
+.status-dot.red { background: var(--danger); }
+.status-dot.orange { background: var(--warning); }
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background: var(--card);
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 { font-size: 18px; }
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.modal-body { padding: 24px; }
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.form-group textarea { min-height: 80px; resize: vertical; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Textarea large */
+.textarea-large {
+  width: 100%;
+  min-height: 300px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+/* Wizard */
+.wizard {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.wizard-step {
+  display: none;
+}
+
+.wizard-step.active {
+  display: block;
+}
+
+.wizard-progress {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.wizard-progress::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+
+.wizard-step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  background: var(--bg);
+  padding: 0 8px;
+}
+
+.wizard-step-indicator .step-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.wizard-step-indicator.active .step-num {
+  background: var(--primary);
+  color: white;
+}
+
+.wizard-step-indicator.completed .step-num {
+  background: var(--success);
+  color: white;
+}
+
+.wizard-step-indicator .step-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.wizard-step-indicator.active .step-label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Editable table for rules */
+.rule-table input {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.rule-table select {
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.rule-row td {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+/* Material preview */
+.material-preview {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.material-preview .file-icon { margin-right: 8px; font-size: 16px; }
+
+/* Draft card */
+.draft-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  background: var(--card);
+}
+
+.draft-card .draft-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.draft-card .draft-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.draft-card .draft-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+/* Timeline */
+.timeline { position: relative; padding-left: 24px; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -24px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid var(--card);
+}
+
+.timeline-content {
+  background: var(--card);
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.timeline-title { font-weight: 600; font-size: 14px; }
+.timeline-date { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Alerts */
+.alert {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-warning { background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; }
+.alert-danger { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+.alert-info { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+.alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-state-icon { font-size: 48px; margin-bottom: 16px; }
+
+/* Search */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+}
+
+/* Filter tags */
+.filter-tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-tag {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition: all 0.2s;
+}
+
+.filter-tag:hover { background: var(--bg); }
+.filter-tag.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* Score display */
+.score-display {
+  text-align: center;
+  padding: 30px;
+}
+
+.score-number {
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+/* Chart bars */
+.chart-bar-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.chart-bar-label {
+  width: 100px;
+  font-size: 13px;
+  text-align: right;
+  padding-right: 12px;
+  flex-shrink: 0;
+}
+
+.chart-bar-wrap {
+  flex: 1;
+  height: 24px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.chart-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  min-width: 30px;
+}
+
+/* ======== Mobile Responsive ======== */
+
+/* Mobile Header */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  z-index: 200;
+  align-items: center;
+  padding: 0 16px;
+  justify-content: space-between;
+}
+.mobile-header h1 {
+  font-size: 18px;
+  color: var(--primary);
+  font-weight: 700;
+}
+.hamburger {
+  width: 40px; height: 40px;
+  border: none; background: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 8px;
+  border-radius: 8px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 1px;
+  transition: all 0.3s;
+}
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Mobile Bottom Nav */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 64px;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  z-index: 200;
+  -webkit-box-pack: distribute;
+  justify-content: space-around;
+  -webkit-box-align: center;
+  align-items: center;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex: 1;
+  height: 100%;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 11px;
+  transition: color 0.2s;
+  border: none;
+  background: none;
+  padding: 4px;
+}
+.mobile-nav-icon {
+  font-size: 22px;
+  margin: 0;
+  width: auto; height: auto;
+  display: block;
+  line-height: 1.4;
+}
+.mobile-nav-label {
+  font-size: 11px;
+  display: block;
+}
+.mobile-nav-item.active {
+  color: var(--primary);
+}
+.mobile-nav-item.active .mobile-nav-icon {
+  font-weight: 700;
+}
+
+/* Sidebar Overlay for mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 99;
+}
+.sidebar-overlay.active { display: block; }
+
+/* Responsive Breakpoint */
+@media (max-width: 768px) {
+  .app { padding-top: 56px; padding-bottom: 64px; }
+  .mobile-header { display: flex; }
+  .mobile-bottom-nav { display: flex; }
+  
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 260px;
+    top: 0;
+    z-index: 300;
+  }
+  .sidebar.open { transform: translateX(0); }
+  
+  .main {
+    margin-left: 0;
+    max-width: 100vw;
+    padding: 16px;
+    padding-bottom: 80px;
+  }
+  
+  .card-grid { grid-template-columns: 1fr; gap: 12px; }
+  .form-row { grid-template-columns: 1fr; gap: 12px; }
+  
+  .header { margin-bottom: 16px; }
+  .header h2 { font-size: 20px; }
+  .header-actions { flex-wrap: wrap; gap: 8px; }
+  
+  .card { padding: 16px; }
+  .card-title { font-size: 12px; }
+  .card-value { font-size: 28px; }
+  .card-sub { font-size: 12px; }
+  
+  .section-title { font-size: 16px; margin-bottom: 12px; }
+  
+  .btn { padding: 10px 16px; font-size: 14px; min-height: 40px; }
+  .btn-primary { min-height: 40px; }
+  
+  /* Mobile table cards */
+  .table-container { border: none; background: transparent; }
+  table, thead, tbody, th, td, tr { display: block; }
+  thead { display: none; }
+  tbody tr {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  tbody td {
+    border: none;
+    padding: 4px 0;
+    font-size: 13px;
+  }
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  tbody td:first-child { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  tbody td:first-child::before { display: none; }
+  
+  .search-bar { flex-direction: column; gap: 8px; }
+  .search-bar input { width: 100%; padding: 10px 12px; }
+  
+  .modal { width: 95%; max-height: 85vh; border-radius: 16px; }
+  .modal-header { padding: 16px 20px; }
+  .modal-header h3 { font-size: 16px; }
+  .modal-body { padding: 16px 20px; }
+  .modal-footer { padding: 12px 20px; flex-direction: column-reverse; gap: 8px; }
+  .modal-footer .btn { width: 100%; justify-content: center; }
+  
+  .form-group { margin-bottom: 14px; }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 10px 12px;
+    font-size: 16px; /* Prevent iOS zoom */
+  }
+  
+  .timeline { padding-left: 20px; }
+  .timeline-dot { left: -20px; width: 12px; height: 12px; }
+  .timeline-content { padding: 10px 14px; }
+  
+  .wizard-progress { margin-bottom: 20px; }
+  .wizard-step-indicator .step-label { font-size: 10px; }
+  
+  .chart-bar-label { width: 80px; font-size: 12px; }
+  .chart-bar-wrap { height: 20px; }
+  
+  .empty-state { padding: 40px 16px; }
+  .empty-state-icon { font-size: 40px; }
+  
+  .score-number { font-size: 42px; }
+  .score-label { font-size: 14px; }
+  
+  .material-path-list { grid-template-columns: 1fr; }
+  
+  .filter-tags { gap: 6px; }
+  .filter-tag { padding: 6px 12px; font-size: 13px; }
+  
+  /* Touch targets */
+  .nav-item { padding: 14px 20px; font-size: 15px; }
+  .nav-icon { width: 24px; height: 24px; font-size: 18px; }
+}
+
+@media (max-width: 480px) {
+  .card-grid { gap: 10px; }
+  .card { padding: 14px; border-radius: 12px; }
+  .card-value { font-size: 24px; }
+  .header h2 { font-size: 18px; }
+  .mobile-header h1 { font-size: 16px; }
+  .btn { padding: 10px 14px; font-size: 13px; }
+  .modal { border-radius: 12px 12px 0 0; position: fixed; bottom: 0; left: 0; right: 0; width: 100%; max-height: 90vh; }
+  .modal-overlay.active .modal { animation: slideUp 0.3s ease; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Loading */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* Section title */
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Hidden */
+.hidden { display: none !important; }
+
+/* Page container */
+.page { display: none; }
+.page.active { display: block; }
+
+/* Button group */
+.btn-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* Checkbox */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Select all */
+.select-all-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* File input hidden */
+input[type="file"] { display: none; }
+
+/* Import area */
+.import-area {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg);
+}
+
+.import-area:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+.material-path-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 12px; }
+.material-path-item { position: relative; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; background: #fff; font-size: 13px; }
+.material-path-item .path-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.material-path-item .path-linked { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+</style>
+</head>
+<body>
+<!-- Mobile Header -->
+<div class="mobile-header">
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+  <h1 id="mobileTitle">成长档案库</h1>
+  <div style="width:40px;"></div>
+</div>
+
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h1>成长档案库</h1>
+      <p>大学生综合素质管理系统</p>
+    </div>
+    <nav id="navMenu">
+      <!-- Navigation items will be dynamically shown/hidden -->
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main" id="mainContent">
+    <!-- Content will be dynamically rendered -->
+  </main>
+</div>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <!-- Rendered by JS -->
+</nav>
+
+<script>
+// ======== Configuration & Constants ========
+const CATEGORIES = {
+  academic: '学业成绩',
+  competition: '学科竞赛',
+  research: '科研创新',
+  social_practice: '社会实践',
+  leadership: '学生工作',
+  talent: '文体活动',
+  honor: '荣誉称号',
+  certificate: '技能证书'
+};
+
+const CATEGORY_COLORS = {
+  academic: '#2563eb',
+  competition: '#ea580c',
+  research: '#7c3aed',
+  social_practice: '#16a34a',
+  leadership: '#0891b2',
+  talent: '#db2777',
+  honor: '#ca8a04',
+  certificate: '#475569'
+};
+
+const NAV_ITEMS = [
+  { id: 'dashboard', icon: '📊', label: '仪表盘' },
+  { id: 'experiences', icon: '📝', label: '经历管理' },
+  { id: 'materials', icon: '📎', label: '材料管理' },
+  { id: 'zongce', icon: '📋', label: '综测预估' },
+  { id: 'missing', icon: '⚠️', label: '缺失提醒' },
+  { id: 'settings', icon: '⚙️', label: '设置' }
+];
+
+// ======== API Infrastructure ========
+const API_BASE = '';
+
+async function apiGet(path) {
+  const resp = await fetch(`${API_BASE}${path}`);
+  if (!resp.ok) throw new Error(`API GET ${path} failed: ${resp.status}`);
+  return resp.json();
+}
+
+async function apiPost(path, data) {
+  const resp = await fetch(`${API_BASE}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  if (!resp.ok) throw new Error(`API POST ${path} failed: ${resp.status}`);
+  return resp.json();
+}
+
+// ======== Preloaded Demo Data ========
+const PRELOADED_EXPERIENCES = {"schema_version":"1.0","student_info":{"name":"张海啸","student_id":"2022010305","grade":"本科三年级","major":"法学","student_type":"本科生","academic_gpa":"3.58","phone":"138****8888","email":"zhanghx@example.edu.cn"},"experiences":[{"id":"exp-001","name":"学年基本素质测评通过","category":"basic_quality","subcategory_id":"basic_quality_full","date":"2025-06-30","score":10.0,"status":"已归档","description":"2024-2025学年未受学校纪律处分，班级民主评议无重大问题，基本素质测评获得满分。","tags":["基本素质","民主评议","必备项"],"materials":["materials/基本素质/班级民主评议表.pdf","materials/基本素质/无违纪证明.pdf"],"notes":"每年固定项目，需班级测评小组签字确认","achievements":"基本素质测评为满分10分，无扣分项"},{"id":"exp-002","name":"学业成绩（GPA折合）","category":"academic_score","subcategory_id":"academic_undergrad","date":"2025-06-30","score":53.7,"status":"已归档","description":"2024-2025学年所修全部课程GPA为3.58，按公式 GPA×25×0.6 折合学业成绩得分。","tags":["学业成绩","GPA","核心项"],"materials":["materials/学业成绩/教务处盖章成绩单.pdf"],"notes":"GPA 3.58 × 25 × 0.6 = 53.7分，专业排名约前25%","achievements":"学年GPA 3.58，专业课平均分85分以上"},{"id":"exp-003","name":"校级优秀学术论文评选三等奖","category":"academic_research","subcategory_id":"research_award_school_3rd","date":"2024-12-15","score":0.2,"status":"已归档","description":"参加海啸大学法学院2024年度学生学术论文评选，论文《外卖骑手劳动权益保障的法律路径》获得校级三等奖。","tags":["论文","校级","三等奖","学术科研","劳动法"],"materials":["materials/学术科研/学术论文评选获奖证书.pdf","materials/学术科研/参赛论文原文.pdf"],"notes":"校级三等奖加0.2分。这是本科阶段第一次独立完成学术论文，从选题到定稿历时两个月。","achievements":"独立完成一篇8000字学术论文，系统学习了劳动法与平台经济相关理论，掌握了文献检索与论文写作的基本方法"},{"id":"exp-004","name":"CSSCI扩展版来源期刊合作论文","category":"academic_research","subcategory_id":"research_paper_cssci_ext_coauthor","date":"2025-02-28","score":0.5,"status":"待确认","description":"与学长合作在《法制与社会发展》（CSSCI扩展版）发表论文《个人信息保护合规审计制度研究》，本人为第二作者，署名单位为海啸大学法学院。","tags":["论文","CSSCI扩展版","合作发表","学术科研","个人信息保护"],"materials":["materials/学术科研/法制与社会发展论文复印件.pdf","materials/学术科研/期刊收录证明.pdf"],"notes":"合作人数为2人（不含导师），个人加分=1.0/2=0.5分。需人工确认合作人数和署名排序。","achievements":"在CSSCI扩展版核心期刊参与发表学术论文，学习了个人信息保护领域的制度设计，积累了合作研究经验"},{"id":"exp-005","name":"主持院级学生科研课题结项","category":"academic_research","subcategory_id":"research_project_college","date":"2025-05-20","score":0.1,"status":"已归档","description":"主持海啸大学法学院2024年度学生科研立项课题《网络购物退货规则的法律适用研究》，已顺利结项并通过评审。","tags":["课题","院级","主持","学术科研","消费者权益"],"materials":["materials/学术科研/院级课题立项通知书.pdf","materials/学术科研/课题结项证明.pdf","materials/学术科研/课题结项报告.pdf"],"notes":"院级课题结项加0.1分。课题过程中完成文献综述和案例分析，虽未单独发表论文，但积累了独立研究经验。","achievements":"独立设计研究方案、撰写5000字结项报告，深入学习了消费者权益保护法与网络交易规则"},{"id":"exp-006","name":"院学生会学术部部长","category":"practice","subcategory_id":"practice_work_college_president","date":"2024-09-01","score":0.8,"status":"已归档","description":"担任海啸大学法学院学生会学术部部长，负责组织学术讲座、读书分享会和考研经验交流活动，任期一学年。","tags":["学生工作","院级","部长","组织能力","实践能力"],"materials":["materials/学生工作/学生会部长聘书.pdf","materials/学生工作/年度述职报告.pdf","materials/学生工作/活动策划方案.pdf"],"notes":"任满一学年且评议合格，按量化得分计算为0.8分。社会工作取最高岗位计分。","achievements":"统筹部门8名成员，一学年组织6场学术讲座、4场读书分享会，累计参与人次超500人，提升了活动策划与团队管理能力"},{"id":"exp-007","name":"班级学习委员","category":"practice","subcategory_id":"practice_work_class_committee","date":"2024-09-01","score":0.3,"status":"已归档","description":"担任本科2022级法学班学习委员，负责课程通知传达、作业收发、师生沟通协调工作，任期一学年。班级民主评议结果为满意。","tags":["班级工作","学习委员","沟通能力","实践能力"],"materials":["materials/学生工作/班委任职证明.pdf","materials/学生工作/班级民主评议表.pdf"],"notes":"班级民主评议超半数满意，在上段取值范围内。社会工作只取最高分岗位，此项分数低于院学生会部长，实际综测中不叠加计算。","achievements":"一学年收发作业200余次，组织2次期末复习资料共享活动，锻炼了细致沟通与信息整合能力"},{"id":"exp-008","name":"海啸大学法律之星模拟法庭竞赛团体亚军","category":"practice","subcategory_id":"practice_event_other_school","date":"2025-04-20","score":0.5,"status":"已归档","description":"代表法学院参加海啸大学第十七届法律之星模拟法庭竞赛，担任原告代理人，团队获得团体亚军（第二名）。","tags":["模拟法庭","校级","亚军","团队竞赛","实践能力"],"materials":["materials/竞赛/模拟法庭获奖证书.pdf","materials/竞赛/竞赛通知及赛程安排.pdf","materials/竞赛/团队名单.pdf","materials/竞赛/起诉状及代理词.pdf"],"notes":"团体项目个人加分=奖项加分/合作人数。奖项加分0.5分，团队共4人，个人加分=0.5/4=0.125分。","achievements":"作为原告代理人撰写起诉状和代理词，参加庭前准备与庭审辩论，团队在校内12支队伍中获得第二名，锻炼了法律文书写作与庭辩表达能力"},{"id":"exp-009","name":"普法进社区暑期社会实践","category":"practice","subcategory_id":"practice_social_volunteer","date":"2024-07-10","score":0.2,"status":"已归档","description":"参加法学院组织的普法进社区暑期社会实践团队，赴北京市某街道开展为期两周的法律咨询、普法宣传与纠纷调解志愿服务。","tags":["社会实践","志愿服务","法律援助","公益","实践能力"],"materials":["materials/社会实践/暑期社会实践证明.pdf","materials/社会实践/志愿服务时长证明.pdf","materials/社会实践/活动照片集.pdf","materials/社会实践/实践报告.pdf"],"notes":"每人每学年最多申报5个实践活动项目。本项为第1个申报项目，已计入。团队共6人，覆盖2个社区，服务时长累计超80小时。","achievements":"为社区居民提供法律咨询40余人次，协助调解纠纷3起，撰写普法宣传手册1份，深化了对基层法律需求的理解"},{"id":"exp-010","name":"校级运动会4×100米接力第四名","category":"practice","subcategory_id":"practice_event_school_team_2nd3rd","date":"2024-10-15","score":0.25,"status":"已归档","description":"代表法学院参加海啸大学第五十八届田径运动会男子4×100米接力比赛，担任第四棒，团队获得第四名。","tags":["体育","校级","团队","接力赛","实践能力"],"materials":["materials/竞赛/运动会秩序册及成绩公告.pdf","materials/竞赛/团队合影.jpg"],"notes":"校级团体比赛4-8名推用2-3名标准加分。团体项目个人加分=0.25/4=0.0625分。虽然加分不多，但体现了全面发展。","achievements":"作为第四棒完成冲刺，团队从预赛晋级决赛并最终获得第四名，锻炼了团队协作与竞技精神"},{"id":"exp-011","name":"法润童心普法志愿服务项目","category":"practice","subcategory_id":"practice_social_volunteer","date":"2024-11-20","score":0.2,"status":"待确认","description":"参加法学院法润童心志愿服务队，前往周边小学开展未成年人保护法主题普法宣讲，累计服务4次。","tags":["志愿服务","普法","未成年人保护","公益","实践能力"],"materials":["materials/社会实践/志愿服务证明.pdf","materials/社会实践/活动照片.pdf","materials/社会实践/宣讲课件.pdf"],"notes":"每人每学年最多申报5个实践活动项目。本项为第2个申报项目，已计入。需确认是否属于社会实践/志愿服务/公益活动/创业范畴。","achievements":"面向小学生设计并讲授4场普法课程，覆盖200余名学生，锻炼了公众演讲与法律普及能力"},{"id":"exp-012","name":"院级三好学生荣誉称号","category":"practice","subcategory_id":"practice_event_other_school","date":"2025-06-15","score":0,"status":"已归档","description":"获评2024-2025学年海啸大学法学院三好学生荣誉称号。","tags":["荣誉称号","三好学生","院级"],"materials":["materials/荣誉称号/三好学生证书.pdf"],"notes":"荣誉称号本身在综测细则中无直接加分项，但可作为奖学金答辩和简历的重要内容。","achievements":"综合德智体美劳表现获得学院认可，体现了较为全面的个人素质"}],"material_drafts":[],"metadata":{"created_at":"2025-01-01","last_updated":"2025-09-21","total_experiences":12,"total_score_estimate":65.358,"academic_year":"2024-2025"}};
+
+const PRELOADED_TAGS = {"schema_version":"1.0","skill_tags":["编程开发","数据分析","产品设计","项目管理","团队协作","公开演讲","文档撰写","外语能力","图像设计","视频制作","实验操作","调研分析","创新思维","批判性思维","沟通表达","领导力","抗压能力","时间管理","跨文化交流","商业分析"],"achievement_tags":["一等奖","二等奖","三等奖","优秀奖","入围","冠军","亚军","季军","金奖","银奖","铜奖","最佳创意奖","最佳人气奖","优秀组织奖","优秀志愿者","优秀团员","优秀学生干部","三好学生","国家奖学金","学业奖学金","优秀学生"],"role_tags":["负责人","队长","组长","核心成员","成员","志愿者","组织者","策划","主持人","讲师","助教","评委","指导老师","编剧","导演","编剧","演员","演奏者","运动员","队长","首发","替补"]};
+
+// ======== Preloaded Rules (v2.0) ========
+// 预置综测细则：海啸大学x学院 2025-2026学年
+const PRELOADED_RULES = {
+  "schema_version": "2.0",
+  "college_name": "海啸大学x学院",
+  "academic_year": "2025-2026",
+  "categories": [
+    {
+      "id": "basic_quality",
+      "name": "基本素质测评",
+      "description": "基准满分10分，采用异常扣分制。上一学年未受纪律处分且班级民主评议无重大问题的，得满分。",
+      "max_score": 10.0,
+      "subcategories": [
+        {
+          "id": "basic_quality_full",
+          "name": "基本素质测评满分",
+          "score": 10.0,
+          "max_score": 10.0,
+          "evidence_required": ["班级民主评议通过"],
+          "status": "已提取",
+          "notes": "未受学校纪律处分，且班级民主评议未反映出经核实的重大品行、诚信、纪律问题",
+          "unit": "次"
+        },
+        {
+          "id": "basic_quality_deduct_thought",
+          "name": "思想政治方面问题扣分",
+          "score": -0.5,
+          "max_score": -0.1,
+          "evidence_required": ["班级测评小组与班主任确认的问题记录"],
+          "status": "已提取",
+          "notes": "班级民主评议中实名反映的具体、可核实问题，每方面酌情扣0.1-0.5分",
+          "unit": "次"
+        },
+        {
+          "id": "basic_quality_deduct_behavior",
+          "name": "行为规范方面问题扣分",
+          "score": -0.5,
+          "max_score": -0.1,
+          "evidence_required": ["班级测评小组与班主任确认的问题记录"],
+          "status": "已提取",
+          "notes": "同思想政治扣分规则",
+          "unit": "次"
+        },
+        {
+          "id": "basic_quality_deduct_attitude",
+          "name": "学习态度方面问题扣分",
+          "score": -0.5,
+          "max_score": -0.1,
+          "evidence_required": ["班级测评小组与班主任确认的问题记录"],
+          "status": "已提取",
+          "notes": "同思想政治扣分规则",
+          "unit": "次"
+        },
+        {
+          "id": "basic_quality_deduct_health",
+          "name": "身心健康方面问题扣分",
+          "score": -0.5,
+          "max_score": -0.1,
+          "evidence_required": ["班级测评小组与班主任确认的问题记录"],
+          "status": "已提取",
+          "notes": "同思想政治扣分规则",
+          "unit": "次"
+        }
+      ]
+    },
+    {
+      "id": "academic_score",
+      "name": "学业成绩测评",
+      "description": "按学年计算，满分60分。本科生得分=GPA×25×0.6；硕士生得分=课程加权平均绩点×25×0.6；博士生无学术违纪即得60分。",
+      "max_score": 60.0,
+      "calc_type": "gpa",
+      "subcategories": [
+        {
+          "id": "academic_undergrad",
+          "name": "本科生学业成绩",
+          "calc_type": "gpa",
+          "formula": "GPA * 25 * 0.6",
+          "score": 0.0,
+          "max_score": 60.0,
+          "evidence_required": ["教务处盖章成绩单"],
+          "status": "已提取",
+          "notes": "得分=GPA×25×0.6，课程范围为本学年所修所有课程。P/NP课程P不纳入均分，NP视同不及格；W/EX不计入；缓考I取得成绩后计入。",
+          "unit": "学年"
+        },
+        {
+          "id": "academic_master",
+          "name": "硕士研究生学业成绩",
+          "calc_type": "gpa",
+          "formula": "课程加权平均绩点 * 25 * 0.6",
+          "score": 0.0,
+          "max_score": 60.0,
+          "evidence_required": ["成绩单"],
+          "status": "已提取",
+          "notes": "得分=课程加权平均绩点×25×0.6，课程范围包括专业必修和全校必修",
+          "unit": "学年"
+        },
+        {
+          "id": "academic_phd",
+          "name": "博士研究生学业成绩",
+          "calc_type": "fixed",
+          "formula": "60",
+          "score": 60.0,
+          "max_score": 60.0,
+          "evidence_required": ["无学术违纪证明"],
+          "status": "已提取",
+          "notes": "上一学年无学术违纪情况即得60分",
+          "unit": "学年"
+        },
+        {
+          "id": "academic_fail_warning",
+          "name": "两门必修课不及格",
+          "calc_type": "flag",
+          "formula": "不合格标志",
+          "score": 0.0,
+          "max_score": 0.0,
+          "evidence_required": ["成绩单"],
+          "status": "已提取",
+          "notes": "上一学年出现两门必修课不及格者，学业学术测评不合格。重修及格以重修成绩为准。",
+          "unit": "学年"
+        }
+      ]
+    },
+    {
+      "id": "academic_research",
+      "name": "学术科研测评加分",
+      "description": "基础分10分+加分。加分上限受实践能力加分约束，两者之和不超过10分。成果时间范围为上一年度9月1日至本年度8月31日，需以学生身份且署名含海啸大学。",
+      "max_score": 10.0,
+      "subcategories": [
+        {
+          "id": "research_paper_top4_independent",
+          "name": "四大顶刊独立论文",
+          "score": 3.0,
+          "max_score": 3.0,
+          "evidence_required": ["论文原件/复印件", "署名含海啸大学"],
+          "status": "已提取",
+          "notes": "《中国社会科学》《中国法学》《法学研究》《中外法学》；合作撰写为3/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_top4_coauthor",
+          "name": "四大顶刊合作论文",
+          "score": 3.0,
+          "max_score": 3.0,
+          "evidence_required": ["论文原件/复印件", "署名含海啸大学", "合作人数证明"],
+          "status": "已提取",
+          "notes": "个人加分为3/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_cssci_independent",
+          "name": "CSSCI来源期刊独立论文（除四大外）",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["论文原件/复印件", "署名含海啸大学", "CSSCI来源期刊证明"],
+          "status": "已提取",
+          "notes": "当年《CSSCI来源期刊》和《CSSCI来源集刊》所列除四大期刊外的核心期刊；合作为1.5/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_cssci_coauthor",
+          "name": "CSSCI来源期刊合作论文（除四大外）",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["论文原件/复印件", "署名含海啸大学", "CSSCI来源期刊证明", "合作人数证明"],
+          "status": "已提取",
+          "notes": "个人加分为1.5/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_cssci_ext_independent",
+          "name": "CSSCI扩展版独立论文",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": ["论文原件/复印件", "署名含海啸大学", "CSSCI扩展版证明"],
+          "status": "已提取",
+          "notes": "当年《CSSCI扩展版来源期刊》所列期刊；合作为1/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_cssci_ext_coauthor",
+          "name": "CSSCI扩展版合作论文",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": ["论文原件/复印件", "署名含海啸大学", "CSSCI扩展版证明", "合作人数证明"],
+          "status": "已提取",
+          "notes": "个人加分为1/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_other_independent",
+          "name": "其他正式出版报刊独立论文",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": ["论文原件/复印件", "署名含海啸大学"],
+          "status": "已提取",
+          "notes": "除上述期刊外的国家正式出版的其他报刊；合作为0.2/合作人数；增刊酌情降一档",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_other_coauthor",
+          "name": "其他正式出版报刊合作论文",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": ["论文原件/复印件", "署名含海啸大学", "合作人数证明"],
+          "status": "已提取",
+          "notes": "个人加分为0.2/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_ssci_q1q2_independent",
+          "name": "SSCI Q1/Q2区独立论文",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["论文原件/复印件", "期刊官方收录证明", "JCR分区截图", "署名含海啸大学"],
+          "status": "已提取",
+          "notes": "以JCR当年分区为准；合作为1.5/合作人数；与CSSCI同成果取高分不重复",
+          "unit": "篇"
+        },
+        {
+          "id": "research_ssci_q1q2_coauthor",
+          "name": "SSCI Q1/Q2区合作论文",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["论文原件/复印件", "期刊官方收录证明", "JCR分区截图", "署名含海啸大学", "合作人数证明"],
+          "status": "已提取",
+          "notes": "个人加分为1.5/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_ssci_q3q4_independent",
+          "name": "SSCI Q3/Q4区及其他SSCI独立论文",
+          "score": 0.8,
+          "max_score": 0.8,
+          "evidence_required": ["论文原件/复印件", "期刊官方收录证明", "JCR分区截图", "署名含海啸大学"],
+          "status": "已提取",
+          "notes": "合作为0.8/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_ssci_q3q4_coauthor",
+          "name": "SSCI Q3/Q4区及其他SSCI合作论文",
+          "score": 0.8,
+          "max_score": 0.8,
+          "evidence_required": ["论文原件/复印件", "期刊官方收录证明", "JCR分区截图", "署名含海啸大学", "合作人数证明"],
+          "status": "已提取",
+          "notes": "个人加分为0.8/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_book_independent",
+          "name": "独立撰写法学著作",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["著作原件/版权页复印件", "署名含海啸大学"],
+          "status": "已提取",
+          "notes": "合著为1.5/合作人数；与已加分论文可叠加，但著作+论文总分不超过5分；翻译著作不加分",
+          "unit": "本"
+        },
+        {
+          "id": "research_book_coauthor",
+          "name": "合著法学著作",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["著作原件/版权页复印件", "署名含海啸大学", "合作人数证明"],
+          "status": "已提取",
+          "notes": "个人加分为1.5/合作人数；与导师合作时不含导师；与论文可叠加但总分不超5分",
+          "unit": "本"
+        },
+        {
+          "id": "research_award_national_1st",
+          "name": "国家级学术征文一等奖",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "特等奖比照一等奖；合作作品个人加分为1/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_national_2nd",
+          "name": "国家级学术征文二等奖",
+          "score": 0.7,
+          "max_score": 0.7,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.7/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_national_3rd",
+          "name": "国家级学术征文三等奖",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.5/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_provincial_1st",
+          "name": "省/部级学术征文一等奖",
+          "score": 0.7,
+          "max_score": 0.7,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "特等奖比照一等奖；合作作品个人加分为0.7/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_provincial_2nd",
+          "name": "省/部级学术征文二等奖",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.5/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_provincial_3rd",
+          "name": "省/部级学术征文三等奖",
+          "score": 0.3,
+          "max_score": 0.3,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.3/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_school_1st",
+          "name": "校级学术征文一等奖",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "特等奖比照一等奖；合作作品个人加分为0.5/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_school_2nd",
+          "name": "校级学术征文二等奖",
+          "score": 0.3,
+          "max_score": 0.3,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.3/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_school_3rd",
+          "name": "校级学术征文三等奖",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.2/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_college_1st",
+          "name": "院级学术征文一等奖",
+          "score": 0.3,
+          "max_score": 0.3,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "特等奖比照一等奖；合作作品个人加分为0.3/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_college_2nd",
+          "name": "院级学术征文二等奖",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.2/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_college_3rd",
+          "name": "院级学术征文三等奖",
+          "score": 0.1,
+          "max_score": 0.1,
+          "evidence_required": ["获奖证书复印件", "获奖文章"],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.1/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_challenge_cup",
+          "name": "挑战杯科技竞赛获奖",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": ["获奖证书复印件"],
+          "status": "已提取",
+          "notes": "比照国家级/省/校级/院级学术征文竞赛对应等级加分；合作作品个人加分=奖项加分/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "research_project_national",
+          "name": "主持国家级课题结项",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["课题结项证明", "署名含海啸大学"],
+          "status": "已提取",
+          "notes": "课题过程中已发表论文/著作的，按论文/著作标准加分，不按此条",
+          "unit": "项"
+        },
+        {
+          "id": "research_project_provincial",
+          "name": "主持省级课题结项",
+          "score": 0.3,
+          "max_score": 0.3,
+          "evidence_required": ["课题结项证明", "署名含海啸大学"],
+          "status": "已提取",
+          "notes": "同上，已发表论文的按论文标准",
+          "unit": "项"
+        },
+        {
+          "id": "research_project_school",
+          "name": "主持校级课题结项",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": ["课题结项证明", "署名含海啸大学"],
+          "status": "已提取",
+          "notes": "同上，已发表论文的按论文标准",
+          "unit": "项"
+        },
+        {
+          "id": "research_project_college",
+          "name": "主持院级课题结项",
+          "score": 0.1,
+          "max_score": 0.1,
+          "evidence_required": ["课题结项证明", "署名含海啸大学"],
+          "status": "已提取",
+          "notes": "同上，已发表论文的按论文标准",
+          "unit": "项"
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "name": "实践能力测评加分",
+      "description": "基础分10分+加分。加分上限受学术科研加分约束，两者之和不超过10分。时间范围为上一年度9月1日至本年度8月31日，需以学生身份且署名含海啸大学。",
+      "max_score": 10.0,
+      "subcategories": [
+        {
+          "id": "practice_work_union_president",
+          "name": "校学生会/研究生会执委会主席、常代会会长",
+          "score": 1.5,
+          "max_score": 3.0,
+          "evidence_required": ["任职证明/聘书", "工作业绩材料"],
+          "status": "已提取",
+          "notes": "加0-1.5分，酌情加分理由充分的最高不超过3分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_union_vp",
+          "name": "校学生会/研究生会副主席、常代会副会长、校团委副部长",
+          "score": 0.75,
+          "max_score": 1.5,
+          "evidence_required": ["任职证明/聘书", "工作业绩材料"],
+          "status": "已提取",
+          "notes": "加0-0.75分，最高不超1.5分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_union_director",
+          "name": "校学生会/研究生会执委会、常代会各部长",
+          "score": 0.5,
+          "max_score": 1.0,
+          "evidence_required": ["任职证明/聘书", "工作业绩材料"],
+          "status": "已提取",
+          "notes": "加0-0.5分，最高不超1分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_club_president",
+          "name": "登记注册社团社长/团支书/理事长",
+          "score": 0.25,
+          "max_score": 0.5,
+          "evidence_required": ["任职证明/聘书"],
+          "status": "已提取",
+          "notes": "加0-0.25分，最高不超0.5分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_youth_sec",
+          "name": "院团委副书记、学生党建中心副主任",
+          "score": 1.5,
+          "max_score": 3.0,
+          "evidence_required": ["任职证明/聘书", "工作业绩材料"],
+          "status": "已提取",
+          "notes": "加0-1.5分，最高不超3分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_president",
+          "name": "院学生会/研究生会/法律硕士联合会主席团成员、院团委各部部长、学生党建中心各部部长",
+          "score": 1.0,
+          "max_score": 2.0,
+          "evidence_required": ["任职证明/聘书", "工作业绩材料"],
+          "status": "已提取",
+          "notes": "加0-1分，最高不超2分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_staff_volunteer",
+          "name": "院学生会/研究生会/法律硕士联合会工作部门志愿者（合格及以上）",
+          "score": 0.1,
+          "max_score": 0.2,
+          "evidence_required": ["年度述职评议结果", "任职满一学年证明"],
+          "status": "已提取",
+          "notes": "完整任职满一学年且评议合格及以上；部门志愿者加0.1分，最高不超0.2分",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_staff_leader",
+          "name": "院学生会/研究生会/法律硕士联合会工作部门负责人（合格及以上）",
+          "score": 0.25,
+          "max_score": 0.35,
+          "evidence_required": ["年度述职评议结果", "任职满一学年证明"],
+          "status": "已提取",
+          "notes": "完整任职满一学年且评议合格及以上；部门负责人加0.25分，最高不超0.35分；最终分数由主席团确定",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_deputy",
+          "name": "院团委各部副部长、学生党建中心各部副部长",
+          "score": 0.25,
+          "max_score": 0.5,
+          "evidence_required": ["任职证明/聘书"],
+          "status": "已提取",
+          "notes": "加0-0.25分，最高不超0.5分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_staff_excellent",
+          "name": "院团委/学生党建中心骨干及团校学员表彰",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["表彰证书/证明"],
+          "status": "已提取",
+          "notes": "可酌情加分，最高不超0.5分",
+          "unit": "次"
+        },
+        {
+          "id": "practice_work_party_secretary",
+          "name": "学生党支部委员（含党支书）",
+          "score": 0.5,
+          "max_score": 1.0,
+          "evidence_required": ["任职证明", "班级民主评议结果"],
+          "status": "已提取",
+          "notes": "班主任主持民主评议：超半数满意在上段取值，基本满意在中段取值，不满意不加分；支部总分不超1分（获校级集体奖可提至2分）",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_league_secretary",
+          "name": "学生团支部委员（含团支书）",
+          "score": 0.5,
+          "max_score": 1.0,
+          "evidence_required": ["任职证明", "班级民主评议结果"],
+          "status": "已提取",
+          "notes": "同党支部规则；支部总分不超1分（获校级集体奖可提至2分）",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_class_committee",
+          "name": "班委会委员（含班长）",
+          "score": 0.5,
+          "max_score": 1.5,
+          "evidence_required": ["任职证明", "班级民主评议结果"],
+          "status": "已提取",
+          "notes": "班主任主持民主评议；班委会总分不超1.5分（获校级集体奖可提至3分）",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_grade_party",
+          "name": "年级或跨年级党支部委员",
+          "score": 0.5,
+          "max_score": 1.0,
+          "evidence_required": ["任职证明"],
+          "status": "已提取",
+          "notes": "学生工作办公室酌情加分；支部总分不超1分",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_pku_law_review_editor",
+          "name": "《北大法律评论》主编",
+          "score": 0.25,
+          "max_score": 0.25,
+          "evidence_required": ["任职证明"],
+          "status": "已提取",
+          "notes": "任职满一学期及以上且完成实质性工作",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_pku_law_review_deputy",
+          "name": "《北大法律评论》副主编/编辑",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": ["任职证明"],
+          "status": "已提取",
+          "notes": "任职满一学期及以上且完成实质性工作",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_assistant",
+          "name": "学生助理/兼职（带班）辅导员",
+          "score": 0.1,
+          "max_score": 0.1,
+          "evidence_required": ["任职证明", "考核结果"],
+          "status": "已提取",
+          "notes": "任职满一学期以上+积极履职+考核合格及以上；不合格不加分",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_event_intl_team_top3",
+          "name": "国际文艺体育赛事团体前三",
+          "score": 3.0,
+          "max_score": 3.0,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "团体项目个人加分=3/合作人数；证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_intl_team_4to8",
+          "name": "国际文艺体育赛事团体第四至八名",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "团体项目个人加分=1.5/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_intl_individual_top5",
+          "name": "国际文艺体育赛事个人前五名",
+          "score": 3.0,
+          "max_score": 3.0,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_intl_individual_6to8",
+          "name": "国际文艺体育赛事个人第六至八名",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_national_team_top3",
+          "name": "国家级文艺体育赛事团体前三",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "团体项目个人加分=1.5/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_national_team_4to8",
+          "name": "国家级文艺体育赛事团体第四至八名",
+          "score": 0.7,
+          "max_score": 0.7,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "团体项目个人加分=0.7/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_national_individual_top5",
+          "name": "国家级文艺体育赛事个人前五名",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_national_individual_6to8",
+          "name": "国家级文艺体育赛事个人第六至八名",
+          "score": 0.7,
+          "max_score": 0.7,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_provincial_team_1st",
+          "name": "省部级文艺体育赛事团体第一名",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "团体项目个人加分=1/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_provincial_team_2nd3rd",
+          "name": "省部级文艺体育赛事团体第二至三名",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "团体项目个人加分=0.5/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_provincial_individual_1st",
+          "name": "省部级文艺体育赛事个人第一名",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_provincial_individual_2nd5th",
+          "name": "省部级文艺体育赛事个人第二至五名",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_school_team_1st",
+          "name": "校级文艺体育赛事团体第一名",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "团体项目个人加分=0.5/合作人数；仅限官方正式举办、面向全校、代表x学院身份的活动",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_school_team_2nd3rd",
+          "name": "校级文艺体育赛事团体第二至三名",
+          "score": 0.25,
+          "max_score": 0.25,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "团体项目个人加分=0.25/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_school_individual_1st",
+          "name": "校级文艺体育赛事个人第一名",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_school_individual_2nd5th",
+          "name": "校级文艺体育赛事个人第二至五名",
+          "score": 0.25,
+          "max_score": 0.25,
+          "evidence_required": ["获奖证书复印件", "署名含海啸大学/x学院"],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_other_national",
+          "name": "辩论赛/模拟法庭/模拟并购等其他赛事（国家级）",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": ["获奖证书复印件", "活动证明"],
+          "status": "已提取",
+          "notes": "类推适用文艺体育赛事加分规则；团体项目个人加分=奖项加分/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_other_provincial",
+          "name": "辩论赛/模拟法庭/模拟并购等其他赛事（省部级）",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": ["获奖证书复印件", "活动证明"],
+          "status": "已提取",
+          "notes": "类推适用文艺体育赛事加分规则",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_other_school",
+          "name": "辩论赛/模拟法庭/模拟并购等其他赛事（校级）",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": ["获奖证书复印件", "活动证明"],
+          "status": "已提取",
+          "notes": "类推适用文艺体育赛事加分规则",
+          "unit": "次"
+        },
+        {
+          "id": "practice_social_volunteer",
+          "name": "社会实践/志愿服务/公益活动/创新创业活动",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": ["活动证明", "志愿服务时长证明", "获奖证书复印件"],
+          "status": "已提取",
+          "notes": "根据活动范围、影响力、时长、表现或成果酌情加分；四部分各部分最高不超过0.2分；每人每学年最多申报5个项目",
+          "unit": "次"
+        }
+      ]
+    }
+  ],
+  "global_constraints": [
+    {
+      "name": "学术科研与实践能力加分总和上限",
+      "description": "学术科研测评加分与实践能力测评加分之和最高不超过10分（两类基础分各10分，加分之和<=10）",
+      "category_ids": ["academic_research", "practice"],
+      "max_total": 10.0
+    },
+    {
+      "name": "实践活动申报上限",
+      "description": "每人每学年申报实践能力测评实践活动加分的项目最多为5个；同一届运动会或赛事中参加多个项目并获奖的，仅计算一项加分",
+      "category_ids": ["practice"],
+      "max_items": 5
+    },
+    {
+      "name": "社会工作就高计算",
+      "description": "每人每学年申报符合加分规则的所有社会工作岗位，最终得分按量化得分最高的岗位计算一次",
+      "category_ids": ["practice"],
+      "rule": "取最高单项"
+    },
+    {
+      "name": "同一成果只计最高分",
+      "description": "同一成果被多次发表、转载或荣获多个奖项的，只以最高分计算一次，不可累加",
+      "category_ids": ["academic_research"],
+      "rule": "去重取最高"
+    },
+    {
+      "name": "用稿通知不加分",
+      "description": "用稿通知不作为加分依据，毕业年级学生除外",
+      "category_ids": ["academic_research"],
+      "rule": "仅正式发表/出版"
+    },
+    {
+      "name": "与导师合作不计导师",
+      "description": "与本人导师合作的学术成果，在计算合作人数时不含导师",
+      "category_ids": ["academic_research"],
+      "rule": "导师不计入合作人数"
+    }
+  ],
+  "total_structure": {
+    "basic_quality": { "max": 10, "type": "扣分制" },
+    "academic_score": { "max": 60, "type": "计算制" },
+    "academic_research": { "base": 10, "bonus_max": 10, "type": "基础分+加分" },
+    "practice": { "base": 10, "bonus_max": 10, "type": "基础分+加分" },
+    "total_max": 100
+  }
+};
+
+// ======== Data Store ========
+let appData = {
+  initialized: true,
+  experiences: (typeof PRELOADED_EXPERIENCES !== 'undefined' && PRELOADED_EXPERIENCES) ? PRELOADED_EXPERIENCES : { schema_version: "1.0", student_info: {}, experiences: [], metadata: {} },
+  rules: (typeof PRELOADED_RULES !== 'undefined' && PRELOADED_RULES) ? PRELOADED_RULES : { categories: [] },
+  tags: (typeof PRELOADED_TAGS !== 'undefined' && PRELOADED_TAGS) ? PRELOADED_TAGS : { skill_tags: [], achievement_tags: [], role_tags: [] },
+  materials: {},
+  materialFiles: [],
+  materialDrafts: [],
+  academicGpa: '',
+  studentType: 'undergrad'
+};
+
+let currentPage = 'dashboard';
+let directoryHandle = null;
+let editingExpId = null;
+let wizardStep = 1;
+let extractedRules = null;
+let tempRuleEdits = {};
+
+// ======== Rule Auto-Extraction Logic (JavaScript version of core.py) ========
+
+function extractRulesFromText(text) {
+  const categories = {
+    '学业成绩': { id: 'academic', keywords: ['学业','成绩','GPA','绩点','课程','学习','奖学金','学业奖'] },
+    '学科竞赛': { id: 'competition', keywords: ['竞赛','比赛','大赛','学科','数学建模','程序设计','创新创业','挑战杯','互联网+'] },
+    '科研创新': { id: 'research', keywords: ['科研','论文','专利','软著','项目','课题','研究','发明','创新'] },
+    '社会实践': { id: 'social_practice', keywords: ['实践','志愿','服务','支教','调研','实习','社会','公益'] },
+    '学生工作': { id: 'leadership', keywords: ['学生工作','干部','班委','学生会','社团','助理','负责人','组织'] },
+    '文体活动': { id: 'talent', keywords: ['文体','文艺','体育','艺术','表演','书法','绘画','歌唱','舞蹈'] },
+    '荣誉称号': { id: 'honor', keywords: ['荣誉','称号','三好','优秀','先进','标兵','模范'] },
+    '技能证书': { id: 'certificate', keywords: ['证书','资格','等级','英语','计算机','普通话','驾照','技能证'] }
+  };
+
+  const result = {
+    schema_version: "1.0",
+    college_name: "",
+    academic_year: "",
+    categories: []
+  };
+
+  // Extract college name and year
+  const collegeMatch = text.match(/([\u4e00-\u9fa5]+(?:学院|大学|系部))/);
+  if (collegeMatch) result.college_name = collegeMatch[1];
+
+  const yearMatch = text.match(/(20\d{2}-20\d{2})\s*学年/);
+  if (yearMatch) result.academic_year = yearMatch[1];
+
+  // Initialize categories
+  const catMap = {};
+  for (const [catName, catInfo] of Object.entries(categories)) {
+    const catId = catInfo.id;
+    catMap[catId] = {
+      id: catId, name: catName, description: "",
+      max_score: 0, subcategories: []
+    };
+  }
+
+  // Process line by line
+  const lines = text.split('\n');
+  let currentCategory = null;
+
+  for (let line of lines) {
+    line = line.trim();
+    if (!line || line.length < 3) continue;
+
+    // Detect category headers
+    for (const [catName, catInfo] of Object.entries(categories)) {
+      if (line.includes(catName) && /[分加分标准项目]/.test(line)) {
+        currentCategory = catInfo.id;
+        const maxMatch = line.match(/上限\s*(\d+(?:\.\d+)?)|最高\s*(\d+(?:\.\d+)?)|不超过\s*(\d+(?:\.\d+)?)/);
+        if (maxMatch) {
+          catMap[currentCategory].max_score = parseFloat(maxMatch[1] || maxMatch[2] || maxMatch[3]);
+        }
+        break;
+      }
+    }
+
+    // Skip category header lines (e.g., "二、学科竞赛（上限20分）")
+    if (/^[一二三四五六七八九十]+、/.test(line) && line.includes('上限')) continue;
+
+    // Extract rule: prefer "name + colon + score + 分" pattern, take only first match
+    let name = null, scoreStr = null;
+    
+    // Pattern 1 (most reliable): name + colon + score + 分
+    const m1 = line.match(/([^\d：:][^：:]*)[：:]\s*(\d+(?:\.\d+)?)\s*分/);
+    if (m1) {
+      name = m1[1].trim();
+      scoreStr = m1[2];
+    } else {
+      // Pattern 2: name + space + score + 分 (no colon)
+      const m2 = line.match(/([^\d\s][^\d]*?)\s*(\d+(?:\.\d+)?)\s*分/);
+      if (m2) {
+        name = m2[1].trim();
+        scoreStr = m2[2];
+      }
+    }
+
+    if (name && scoreStr) {
+      let score = parseFloat(scoreStr);
+      if (isNaN(score)) continue;
+
+      // Clean name: remove prefix numbers, dots, spaces, trailing colons
+      name = name.replace(/^[一二三四五六七八九十\d]+[、\.\s]*/, '');
+      name = name.replace(/^[\.\s]+/, '');
+      name = name.replace(/[：: \t]+$/, '');
+      name = name.trim();
+
+      // Skip category headers that got matched (e.g., "学业成绩（上限20分）")
+      if (name.includes('上限') && (name.includes('分）') || name.includes('分)'))) continue;
+
+      if (name.length >= 2 && score > 0) {
+        let catId = currentCategory;
+        if (!catId) {
+          catId = guessCategoryFromText(name + ' ' + line, categories);
+        }
+
+        // Deduplicate: check if same name already exists in this category
+        const existingNames = catMap[catId].subcategories.map(r => r.name);
+        if (existingNames.includes(name)) continue;
+
+        // Extract evidence requirements
+        const evidence = [];
+        const evidenceKeywords = ['证书','证明','奖状','截图','通知','文件','照片','材料','复印件','原件','聘书','成绩单'];
+        for (const kw of evidenceKeywords) {
+          if (line.includes(kw)) evidence.push(kw);
+        }
+
+        // Extract max score (e.g., "上限3分")
+        const limitMatch = line.match(/上限\s*(\d+(?:\.\d+)?)/);
+        const maxS = limitMatch ? parseFloat(limitMatch[1]) : score;
+
+        const status = evidence.length === 0 ? '待确认' : '已提取';
+        const ruleId = catId + '_auto_' + catMap[catId].subcategories.length;
+
+        catMap[catId].subcategories.push({
+          id: ruleId, name: name, score: score,
+          max_score: maxS,
+          evidence_required: evidence.length ? evidence : ['待确认'],
+          status: status, source_text: line.substring(0, 100)
+        });
+      }
+    }
+  }
+
+  // Build result
+  for (const catId of ['academic','competition','research','social_practice','leadership','talent','honor','certificate']) {
+    if (catMap[catId].subcategories.length > 0) {
+      result.categories.push(catMap[catId]);
+    }
+  }
+
+  // If no rules extracted, use default template
+  if (result.categories.length === 0) {
+    return getDefaultRulesTemplate();
+  }
+
+  return result;
+}
+
+function guessCategoryFromText(text, categories) {
+  text = text.toLowerCase();
+  let bestCat = 'competition';
+  let bestScore = 0;
+  for (const [catName, catInfo] of Object.entries(categories)) {
+    let score = 0;
+    for (const kw of catInfo.keywords) {
+      if (text.includes(kw)) score++;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestCat = catInfo.id;
+    }
+  }
+  return bestCat;
+}
+
+function getDefaultRulesTemplate() {
+  return {
+    schema_version: "1.0",
+    college_name: "",
+    academic_year: "",
+    categories: [
+      { id: "academic", name: "学业成绩", description: "课程成绩、学术竞赛、论文发表等", max_score: 20,
+        subcategories: [
+          { id: "academic_gpa_top10", name: "学业成绩前10%", score: 10, max_score: 10, evidence_required: ["成绩单"], status: "待确认" },
+          { id: "academic_gpa_top30", name: "学业成绩前30%", score: 5, max_score: 5, evidence_required: ["成绩单"], status: "待确认" }
+        ]
+      },
+      { id: "competition", name: "学科竞赛", description: "数学建模、程序设计、创新创业等各类竞赛", max_score: 20,
+        subcategories: [
+          { id: "competition_national_1st", name: "全国竞赛一等奖", score: 8, max_score: 8, evidence_required: ["证书"], status: "待确认" },
+          { id: "competition_national_2nd", name: "全国竞赛二等奖", score: 6, max_score: 6, evidence_required: ["证书"], status: "待确认" },
+          { id: "competition_national_3rd", name: "全国竞赛三等奖", score: 4, max_score: 4, evidence_required: ["证书"], status: "待确认" },
+          { id: "competition_provincial_1st", name: "省级竞赛一等奖", score: 5, max_score: 5, evidence_required: ["证书"], status: "待确认" },
+          { id: "competition_provincial_2nd", name: "省级竞赛二等奖", score: 3, max_score: 3, evidence_required: ["证书"], status: "待确认" }
+        ]
+      },
+      { id: "research", name: "科研创新", description: "科研项目、专利、论文、软著等", max_score: 15,
+        subcategories: [
+          { id: "research_paper_sci", name: "SCI论文", score: 10, max_score: 10, evidence_required: ["录用通知/见刊证明"], status: "待确认" },
+          { id: "research_paper_core", name: "核心期刊论文", score: 6, max_score: 6, evidence_required: ["录用通知/见刊证明"], status: "待确认" },
+          { id: "research_patent", name: "发明专利", score: 8, max_score: 8, evidence_required: ["专利证书"], status: "待确认" }
+        ]
+      },
+      { id: "social_practice", name: "社会实践", description: "志愿服务、社会调研、支教、实习等", max_score: 10,
+        subcategories: [
+          { id: "social_practice_outstanding", name: "社会实践优秀个人/团队", score: 5, max_score: 5, evidence_required: ["证明/证书"], status: "待确认" },
+          { id: "social_practice_volunteer", name: "志愿服务时长", score: 0.1, max_score: 3, evidence_required: ["志愿时长证明"], status: "待确认" }
+        ]
+      },
+      { id: "leadership", name: "学生工作", description: "班委、学生会、社团、助理等学生干部经历", max_score: 10,
+        subcategories: [
+          { id: "leadership_student_union", name: "学生会/社团主要负责人", score: 5, max_score: 5, evidence_required: ["聘书/证明"], status: "待确认" },
+          { id: "leadership_class", name: "班委成员", score: 3, max_score: 3, evidence_required: ["聘书/证明"], status: "待确认" }
+        ]
+      },
+      { id: "talent", name: "文体活动", description: "文艺表演、体育赛事、书法绘画等", max_score: 10,
+        subcategories: [
+          { id: "talent_national", name: "国家级文体活动获奖", score: 5, max_score: 5, evidence_required: ["证书"], status: "待确认" },
+          { id: "talent_provincial", name: "省级文体活动获奖", score: 3, max_score: 3, evidence_required: ["证书"], status: "待确认" }
+        ]
+      },
+      { id: "honor", name: "荣誉称号", description: "三好学生、优秀学生干部、优秀团员等", max_score: 10,
+        subcategories: [
+          { id: "honor_sanhao", name: "三好学生", score: 5, max_score: 5, evidence_required: ["证书"], status: "待确认" },
+          { id: "honor_excellent_student", name: "优秀学生干部", score: 5, max_score: 5, evidence_required: ["证书"], status: "待确认" }
+        ]
+      },
+      { id: "certificate", name: "技能证书", description: "英语等级、计算机等级、职业资格证书等", max_score: 10,
+        subcategories: [
+          { id: "certificate_cet6", name: "英语六级", score: 3, max_score: 3, evidence_required: ["证书"], status: "待确认" },
+          { id: "certificate_cet4", name: "英语四级", score: 1, max_score: 1, evidence_required: ["证书"], status: "待确认" },
+          { id: "certificate_computer", name: "计算机等级证书", score: 2, max_score: 2, evidence_required: ["证书"], status: "待确认" }
+        ]
+      }
+    ]
+  };
+}
+
+// ======== Material Filename Parsing ========
+
+// ======== Navigation & Rendering ========
+
+// Mobile bottom nav shows top 5 items only
+const MOBILE_NAV_ITEMS = NAV_ITEMS.filter(n => ['dashboard', 'experiences', 'zongce', 'missing', 'settings'].includes(n.id));
+
+function renderNav() {
+  // Update mobile header title
+  const mobileTitle = document.getElementById('mobileTitle');
+  if (mobileTitle) {
+    const navItem = NAV_ITEMS.find(n => n.id === currentPage);
+    mobileTitle.textContent = navItem ? navItem.label : '成长档案库';
+  }
+
+  // Desktop sidebar nav
+  const nav = document.getElementById('navMenu');
+  if (nav) {
+    let html = '';
+    for (const item of NAV_ITEMS) {
+      const isActive = currentPage === item.id;
+      html += `
+        <div class="nav-item ${isActive ? 'active' : ''}" data-page="${item.id}" onclick="switchPage('${item.id}')">
+          <span class="nav-icon">${item.icon}</span> ${item.label}
+          ${item.id === 'missing' ? '<span class="badge hidden" id="missingBadge">0</span>' : ''}
+        </div>
+      `;
+    }
+    nav.innerHTML = html;
+  }
+
+  // Mobile bottom nav
+  const mobileNav = document.getElementById('mobileBottomNav');
+  if (mobileNav) {
+    let mHtml = '';
+    for (const item of MOBILE_NAV_ITEMS) {
+      const isActive = currentPage === item.id;
+      mHtml += `
+        <div class="mobile-nav-item ${isActive ? 'active' : ''}" data-page="${item.id}" onclick="switchPage('${item.id}')">
+          <span class="mobile-nav-icon">${item.icon}</span>
+          <span class="mobile-nav-label">${item.label}</span>
+        </div>
+      `;
+    }
+    mobileNav.innerHTML = mHtml;
+  }
+}
+
+function switchPage(page) {
+  currentPage = page;
+  renderNav();
+  // Update mobile header title
+  const mobileTitle = document.getElementById('mobileTitle');
+  if (mobileTitle) {
+    const navItem = NAV_ITEMS.find(n => n.id === page);
+    mobileTitle.textContent = navItem ? navItem.label : '成长档案库';
+  }
+  // Close sidebar on mobile after page switch
+  closeSidebar();
+  renderMainContent();
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const btn = document.getElementById('hamburgerBtn');
+  if (sidebar) sidebar.classList.toggle('open');
+  if (overlay) overlay.classList.toggle('active');
+  if (btn) btn.classList.toggle('active');
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const btn = document.getElementById('hamburgerBtn');
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('active');
+  if (btn) btn.classList.remove('active');
+}
+
+async function renderMainContent() {
+  const main = document.getElementById('mainContent');
+  if (!appData.initialized) {
+    renderWizard(main);
+    return;
+  }
+
+  switch (currentPage) {
+    case 'dashboard': await renderDashboardPage(main); break;
+    case 'experiences': renderExperiencesPage(main); break;
+    case 'materials': await renderMaterialsPage(main); break;
+    case 'zongce': await renderZongcePage(main); break;
+    case 'missing': await renderMissingPage(main); break;
+    case 'settings': renderSettingsPage(main); break;
+    default: await renderDashboardPage(main);
+  }
+}
+
+// ======== Wizard (Initialization) ========
+
+function renderWizard(container) {
+  container.innerHTML = `
+    <div class="wizard">
+      <div class="wizard-progress">
+        <div class="wizard-step-indicator ${wizardStep >= 1 ? 'active' : ''} ${wizardStep > 1 ? 'completed' : ''}">
+          <div class="step-num">1</div>
+          <div class="step-label">学生信息</div>
+        </div>
+        <div class="wizard-step-indicator ${wizardStep >= 2 ? 'active' : ''} ${wizardStep > 2 ? 'completed' : ''}">
+          <div class="step-num">2</div>
+          <div class="step-label">导入细则</div>
+        </div>
+        <div class="wizard-step-indicator ${wizardStep >= 3 ? 'active' : ''} ${wizardStep > 3 ? 'completed' : ''}">
+          <div class="step-num">3</div>
+          <div class="step-label">确认规则</div>
+        </div>
+        <div class="wizard-step-indicator ${wizardStep >= 4 ? 'active' : ''} ${wizardStep > 4 ? 'completed' : ''}">
+          <div class="step-num">4</div>
+          <div class="step-label">完成</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Student Info -->
+      <div class="wizard-step ${wizardStep === 1 ? 'active' : ''}" id="wizardStep1">
+        <div class="card">
+          <div class="section-title">填写学生基本信息</div>
+          <p style="color:var(--text-secondary);margin-bottom:20px;">这些信息将用于生成综测申报表、奖学金PPT和简历</p>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>姓名 *</label>
+              <input type="text" id="wizName" placeholder="你的姓名">
+            </div>
+            <div class="form-group">
+              <label>学号</label>
+              <input type="text" id="wizStudentId" placeholder="学号">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>学院 *</label>
+              <input type="text" id="wizCollege" placeholder="如：计算机学院">
+            </div>
+            <div class="form-group">
+              <label>专业</label>
+              <input type="text" id="wizMajor" placeholder="如：软件工程">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>年级</label>
+              <input type="text" id="wizGrade" placeholder="如：2023级">
+            </div>
+            <div class="form-group">
+              <label>班级</label>
+              <input type="text" id="wizClass" placeholder="如：软件2301班">
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="wizardNext()">下一步：导入综测细则 →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Import Rules -->
+      <div class="wizard-step ${wizardStep === 2 ? 'active' : ''}" id="wizardStep2">
+        <div class="card">
+          <div class="section-title">导入学院综测细则</div>
+          <p style="color:var(--text-secondary);margin-bottom:20px;">将学院综测细则文件中的文字内容粘贴到下方，或上传文本文件。系统将自动提取加分项目、分值和证明要求。</p>
+          
+          <div class="form-group">
+            <label>学院名称（自动识别，可修改）</label>
+            <input type="text" id="wizCollegeName" placeholder="如：计算机学院">
+          </div>
+          <div class="form-group">
+            <label>综测学年</label>
+            <input type="text" id="wizAcademicYear" placeholder="如：2025-2026">
+          </div>
+          
+          <div class="form-group">
+            <label>综测细则文本 *</label>
+            <textarea class="textarea-large" id="wizRulesText" placeholder="请粘贴综测细则全文...
+
+示例格式：
+一、学业成绩
+1. 学业成绩前10%：10分（需提供成绩单）
+2. 学业成绩前30%：5分
+
+二、学科竞赛
+1. 国家级一等奖：8分（需获奖证书）
+2. 省级一等奖：5分
+..."></textarea>
+          </div>
+          
+          <div class="btn-group">
+            <button class="btn" onclick="wizardPrev()">← 上一步</button>
+            <button class="btn btn-primary" onclick="wizardExtractRules()">自动提取规则</button>
+            <button class="btn" onclick="wizardSkipRules()">跳过，使用默认模板 →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Confirm Rules -->
+      <div class="wizard-step ${wizardStep === 3 ? 'active' : ''}" id="wizardStep3">
+        <div class="card">
+          <div class="section-title">确认综测细则</div>
+          <p style="color:var(--text-secondary);margin-bottom:20px;">请核对自动提取的加分项目。标记为 <span class="tag tag-orange">待确认</span> 的项需要你核实后修改。点击表格可直接编辑。</p>
+          
+          <div id="rulesConfirmTable"></div>
+          
+          <div class="btn-group">
+            <button class="btn" onclick="wizardPrev()">← 上一步</button>
+            <button class="btn btn-primary" onclick="wizardSaveRules()">确认并保存 →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Complete -->
+      <div class="wizard-step ${wizardStep === 4 ? 'active' : ''}" id="wizardStep4">
+        <div class="card" style="text-align:center;padding:60px 40px;">
+          <div style="font-size:64px;margin-bottom:20px;">🎉</div>
+          <h2 style="margin-bottom:12px;">初始化完成！</h2>
+          <p style="color:var(--text-secondary);margin-bottom:24px;">你的大学生成长档案库已经准备好了。接下来你可以：</p>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:600px;margin:0 auto;text-align:left;">
+            <div class="card" style="cursor:pointer;" onclick="startAddMaterials()">
+              <div style="font-size:32px;margin-bottom:8px;">📎</div>
+              <div style="font-weight:600;">导入材料</div>
+              <div style="font-size:13px;color:var(--text-secondary);">批量上传活动截图、证书、作品</div>
+            </div>
+            <div class="card" style="cursor:pointer;" onclick="switchPage('experiences')">
+              <div style="font-size:32px;margin-bottom:8px;">📝</div>
+              <div style="font-weight:600;">手动添加经历</div>
+              <div style="font-size:13px;color:var(--text-secondary);">逐条录入活动、比赛、成果</div>
+            </div>
+            <div class="card" style="cursor:pointer;" onclick="switchPage('dashboard')">
+              <div style="font-size:32px;margin-bottom:8px;">📊</div>
+              <div style="font-weight:600;">查看仪表盘</div>
+              <div style="font-size:13px;color:var(--text-secondary);">综测分预估、能力分布、时间线</div>
+            </div>
+            <div class="card" style="cursor:pointer;" onclick="switchPage('settings')">
+              <div style="font-size:32px;margin-bottom:8px;">⚙️</div>
+              <div style="font-weight:600;">修改设置</div>
+              <div style="font-size:13px;color:var(--text-secondary);">调整学生信息、重新导入细则</div>
+            </div>
+          </div>
+          
+          <div style="margin-top:24px;">
+            <button class="btn btn-primary" onclick="finishWizard()">开始使用档案库 →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function wizardNext() {
+  if (wizardStep === 1) {
+    // Validate student info
+    const name = document.getElementById('wizName').value.trim();
+    const college = document.getElementById('wizCollege').value.trim();
+    if (!name || !college) {
+      alert('请填写姓名和学院');
+      return;
+    }
+    
+    appData.experiences.student_info = {
+      name: name,
+      student_id: document.getElementById('wizStudentId').value.trim(),
+      college: college,
+      major: document.getElementById('wizMajor').value.trim(),
+      grade: document.getElementById('wizGrade').value.trim(),
+      class: document.getElementById('wizClass').value.trim()
+    };
+  }
+  
+  wizardStep++;
+  renderMainContent();
+}
+
+function wizardPrev() {
+  if (wizardStep > 1) {
+    wizardStep--;
+    renderMainContent();
+  }
+}
+
+function wizardExtractRules() {
+  const text = document.getElementById('wizRulesText').value.trim();
+  if (!text) {
+    alert('请粘贴综测细则文本');
+    return;
+  }
+  
+  extractedRules = extractRulesFromText(text);
+  
+  // Override college name if user specified
+  const collegeName = document.getElementById('wizCollegeName').value.trim();
+  if (collegeName) extractedRules.college_name = collegeName;
+  
+  const year = document.getElementById('wizAcademicYear').value.trim();
+  if (year) extractedRules.academic_year = year;
+  
+  wizardStep = 3;
+  renderMainContent();
+  
+  // Render confirmation table after DOM update
+  setTimeout(renderRulesConfirmTable, 50);
+}
+
+function wizardSkipRules() {
+  extractedRules = getDefaultRulesTemplate();
+  const collegeName = document.getElementById('wizCollegeName').value.trim();
+  if (collegeName) extractedRules.college_name = collegeName;
+  
+  wizardStep = 3;
+  renderMainContent();
+  setTimeout(renderRulesConfirmTable, 50);
+}
+
+function renderRulesConfirmTable() {
+  const container = document.getElementById('rulesConfirmTable');
+  if (!container || !extractedRules) return;
+  
+  let html = '';
+  
+  for (const cat of extractedRules.categories) {
+    const catId = cat.id;
+    html += `
+      <div style="margin-bottom:24px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <h3 style="font-size:16px;">${cat.name} <span class="tag tag-gray">上限 ${cat.max_score}分</span></h3>
+          <button class="btn" onclick="addNewRuleRow('${catId}')">+ 添加规则</button>
+        </div>
+        <div class="table-container">
+          <table class="rule-table">
+            <thead>
+              <tr>
+                <th style="width:40%">加分项目</th>
+                <th style="width:10%">分值</th>
+                <th style="width:10%">上限</th>
+                <th style="width:25%">证明要求</th>
+                <th style="width:15%">状态</th>
+              </tr>
+            </thead>
+            <tbody>
+    `;
+    
+    for (const rule of cat.subcategories) {
+      const statusClass = rule.status === '待确认' ? 'tag-orange' : 'tag-green';
+      html += `
+        <tr class="rule-row" data-rule-id="${rule.id}" data-cat-id="${catId}">
+          <td><input type="text" value="${rule.name}" onchange="updateRuleField('${catId}','${rule.id}','name',this.value)"></td>
+          <td><input type="number" step="0.1" value="${rule.score}" style="width:60px;" onchange="updateRuleField('${catId}','${rule.id}','score',parseFloat(this.value))"></td>
+          <td><input type="number" step="0.1" value="${rule.max_score}" style="width:60px;" onchange="updateRuleField('${catId}','${rule.id}','max_score',parseFloat(this.value))"></td>
+          <td><input type="text" value="${Array.isArray(rule.evidence_required) ? rule.evidence_required.join(', ') : rule.evidence_required}" onchange="updateRuleField('${catId}','${rule.id}','evidence_required',this.value.split(',').map(s=>s.trim()))"></td>
+          <td><span class="tag ${statusClass}">${rule.status}</span></td>
+        </tr>
+      `;
+    }
+    
+    html += `
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+  
+  container.innerHTML = html;
+}
+
+function updateRuleField(catId, ruleId, field, value) {
+  for (const cat of extractedRules.categories) {
+    if (cat.id === catId) {
+      for (const rule of cat.subcategories) {
+        if (rule.id === ruleId) {
+          rule[field] = value;
+          if (field === 'name' || field === 'score') {
+            rule.status = '已确认';
+          }
+          break;
+        }
+      }
+      break;
+    }
+  }
+  renderRulesConfirmTable();
+}
+
+function addNewRuleRow(catId) {
+  for (const cat of extractedRules.categories) {
+    if (cat.id === catId) {
+      const newId = catId + '_manual_' + cat.subcategories.length;
+      cat.subcategories.push({
+        id: newId, name: '', score: 0, max_score: 0,
+        evidence_required: ['待确认'], status: '待确认', source_text: ''
+      });
+      break;
+    }
+  }
+  renderRulesConfirmTable();
+}
+
+function wizardSaveRules() {
+  appData.rules = extractedRules;
+  appData.initialized = true;
+  
+  // Save data
+  saveData();
+  
+  wizardStep = 4;
+  renderMainContent();
+  renderNav();
+}
+
+function finishWizard() {
+  switchPage('dashboard');
+}
+
+function startAddMaterials() {
+  switchPage('materials');
+}
+
+// ======== Dashboard Page ========
+
+async function renderDashboardPage(container) {
+  const exps = appData.experiences.experiences || [];
+  const totalExps = exps.length;
+  const scores = await calculateAllScores();
+  const totalScore = scores.total_score;
+  
+  let totalMaterials = 0;
+  for (const files of Object.values(appData.materials)) {
+    totalMaterials += files.length;
+  }
+  
+  const issues = checkMissing();
+  const issueCount = issues.length;
+  
+  container.innerHTML = `
+    <div class="header">
+      <h2>仪表盘</h2>
+      <div class="header-actions">
+        <button class="btn btn-primary" onclick="showAddExperienceModal()">+ 新增经历</button>
+      </div>
+    </div>
+    
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">综测预估总分</div>
+        <div class="card-value primary">${totalScore.toFixed(1)}</div>
+        <div class="card-sub">基于当前配置细则</div>
+      </div>
+      <div class="card">
+        <div class="card-title">经历总数</div>
+        <div class="card-value">${totalExps}</div>
+        <div class="card-sub">累计记录</div>
+      </div>
+      <div class="card">
+        <div class="card-title">证明材料</div>
+        <div class="card-value success">${totalMaterials}</div>
+        <div class="card-sub">已归档文件</div>
+      </div>
+      <div class="card">
+        <div class="card-title">待处理问题</div>
+        <div class="card-value ${issueCount > 0 ? 'danger' : ''}">${issueCount}</div>
+        <div class="card-sub">材料缺失/待确认</div>
+      </div>
+    </div>
+    
+    <div class="card-grid" style="grid-template-columns: 2fr 1fr;">
+      <div class="card">
+        <div class="section-title">分类得分进度</div>
+        <div id="categoryProgress"></div>
+      </div>
+      <div class="card">
+        <div class="section-title">能力标签分布</div>
+        <div id="skillDistribution"></div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="section-title">最近经历</div>
+      <div id="recentExperiences"></div>
+    </div>
+  `;
+  
+  // Render category progress
+  const catContainer = document.getElementById('categoryProgress');
+  if (catContainer) {
+    let html = '';
+    for (const [catId, catInfo] of Object.entries(scores.category_scores)) {
+      const st = catInfo.scoring_type || '加分';
+      const base = catInfo.base_score || 0;
+      const bonusMax = catInfo.bonus_max;
+      let displayMax, displayScore, displayPct;
+      
+      if (st === '扣分制') {
+        displayMax = base;
+        displayScore = catInfo.current_score;
+      } else if (st === '基础分+加分') {
+        displayMax = base + (bonusMax || 0);
+        displayScore = catInfo.current_score;
+      } else {
+        displayMax = catInfo.max_score || 0;
+        displayScore = catInfo.current_score;
+      }
+      
+      displayPct = displayMax > 0 ? Math.min((displayScore / displayMax) * 100, 100) : 0;
+      
+      if (displayMax > 0 || st === '计算制') {
+        const color = CATEGORY_COLORS[catId] || '#2563eb';
+        html += `
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>${catInfo.name}</span>
+              <span>${displayScore.toFixed(1)} / ${displayMax}</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${displayPct}%;background:${color}"></div>
+            </div>
+          </div>
+        `;
+      }
+    }
+    catContainer.innerHTML = html;
+  }
+  
+  // Render skill distribution
+  const skillContainer = document.getElementById('skillDistribution');
+  if (skillContainer) {
+    const skillCount = {};
+    for (const exp of exps) {
+      for (const skill of (exp.skills_gained || [])) {
+        skillCount[skill] = (skillCount[skill] || 0) + 1;
+      }
+    }
+    const sortedSkills = Object.entries(skillCount).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    
+    if (sortedSkills.length === 0) {
+      skillContainer.innerHTML = '<p style="color:var(--text-secondary);text-align:center;">暂无能力标签记录</p>';
+    } else {
+      const maxCount = sortedSkills[0][1];
+      let html = '';
+      for (const [skill, count] of sortedSkills) {
+        const pct = (count / maxCount) * 100;
+        html += `
+          <div class="chart-bar-container">
+            <div class="chart-bar-label">${skill}</div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-fill" style="width:${pct}%;background:var(--primary)">${count}</div>
+            </div>
+          </div>
+        `;
+      }
+      skillContainer.innerHTML = html;
+    }
+  }
+  
+  // Render recent experiences
+  const recentContainer = document.getElementById('recentExperiences');
+  if (recentContainer) {
+    const recent = [...exps].reverse().slice(0, 5);
+    if (recent.length === 0) {
+      recentContainer.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:20px;">暂无经历</p>';
+    } else {
+      let html = '<div class="timeline">';
+      for (const exp of recent) {
+        const catName = CATEGORIES[exp.category] || exp.category;
+        const color = CATEGORY_COLORS[exp.category] || '#2563eb';
+        html += `
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:${color}"></div>
+            <div class="timeline-content">
+               <div class="timeline-title">${exp.name}</div>
+              <div class="timeline-date">${catName} · ${exp.date}</div>
+              <div style="margin-top:6px;font-size:13px;">
+                ${exp.achievements ? `<span class="tag tag-blue">${exp.achievements.substring(0, 50)}...</span>` : ''}
+                ${exp.tags && exp.tags.length ? exp.tags.slice(0, 3).map(t => `<span class="tag tag-gray">${t}</span>`).join('') : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      html += '</div>';
+      recentContainer.innerHTML = html;
+    }
+  }
+  
+  // Update badge
+  updateMissingBadge(issueCount);
+}
+
+function updateMissingBadge(count) {
+  const badge = document.getElementById('missingBadge');
+  if (badge) {
+    if (count > 0) {
+      badge.textContent = count;
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+}
+
+// ======== Experiences Page ========
+
+let expFilter = '';
+let expCategoryFilter = '';
+
+function renderExperiencesPage(container) {
+  container.innerHTML = `
+    <div class="header">
+      <h2>经历管理</h2>
+      <div class="header-actions">
+        <button class="btn btn-primary" onclick="showAddExperienceModal()">+ 新增经历</button>
+      </div>
+    </div>
+    
+    <div class="search-bar">
+      <input type="text" id="expSearch" placeholder="搜索经历名称、成果、能力..." oninput="expFilter=this.value;renderExperiencesTable()">
+      <button class="btn" onclick="renderExperiencesTable()">筛选</button>
+    </div>
+    <div class="filter-tags" id="categoryFilters"></div>
+    
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>类型</th>
+            <th>时间</th>
+            <th>角色</th>
+            <th>成果</th>
+            <th>预估加分</th>
+            <th>材料</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="expTableBody"></tbody>
+      </table>
+    </div>
+    <div id="expEmpty" class="empty-state hidden">
+      <div class="empty-state-icon">📝</div>
+      <p>暂无经历记录</p>
+      <button class="btn btn-primary" onclick="showAddExperienceModal()">添加第一条经历</button>
+    </div>
+    
+  `;
+  
+  renderExperiencesTable();
+  renderCategoryFilters();
+}
+
+function renderCategoryFilters() {
+  const container = document.getElementById('categoryFilters');
+  if (!container) return;
+  
+  let html = `<span class="filter-tag ${expCategoryFilter === '' ? 'active' : ''}" onclick="expCategoryFilter='';renderExperiencesTable()">全部</span>`;
+  for (const [id, name] of Object.entries(CATEGORIES)) {
+    html += `<span class="filter-tag ${expCategoryFilter === id ? 'active' : ''}" onclick="expCategoryFilter='${id}';renderExperiencesTable()">${name}</span>`;
+  }
+  container.innerHTML = html;
+}
+
+async function renderExperiencesTable() {
+  const tbody = document.getElementById('expTableBody');
+  const empty = document.getElementById('expEmpty');
+  if (!tbody) return;
+
+  const exps = appData.experiences.experiences || [];
+  let filtered = exps;
+
+  if (expCategoryFilter) {
+    filtered = filtered.filter(e => e.category === expCategoryFilter);
+  }
+  if (expFilter) {
+    const f = expFilter.toLowerCase();
+    filtered = filtered.filter(e =>
+      (e.name || '').toLowerCase().includes(f) ||
+      (e.achievements || '').toLowerCase().includes(f) ||
+      (e.description || '').toLowerCase().includes(f) ||
+      (e.tags || []).some(s => s.toLowerCase().includes(f))
+    );
+  }
+
+  if (filtered.length === 0 && exps.length === 0) {
+    tbody.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  const scores = await calculateAllScores();
+  const scoreMap = {};
+  if (scores.experiences) {
+    for (const item of scores.experiences) {
+      scoreMap[item.id] = item.score;
+    }
+  }
+  
+  tbody.innerHTML = filtered.map(exp => {
+    const catName = CATEGORIES[exp.category] || exp.category;
+    const score = scoreMap[exp.id] || exp.score || 0;
+    const hasMaterials = (exp.materials || []).length > 0;
+    const matStatus = hasMaterials
+      ? `<span class="status"><span class="status-dot green"></span>已关联</span>`
+      : `<span class="status"><span class="status-dot red"></span>未关联</span>`;
+    
+    return `
+      <tr>
+        <td><strong>${exp.name}</strong></td>
+        <td><span class="tag tag-blue">${catName}</span></td>
+        <td>${exp.date || '-'}</td>
+        <td>${exp.status || '-'}</td>
+        <td>${exp.achievements ? exp.achievements.substring(0, 30) + '...' : '-'}</td>
+        <td><strong>${score !== 0 ? (score > 0 ? '+' : '') + score.toFixed(1) : '-'}</strong></td>
+        <td>${matStatus}</td>
+        <td>
+          <button class="btn" onclick="editExperience('${exp.id}')">编辑</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ======== Materials Page ========
+
+async function renderMaterialsPage(container) {
+  // Scan API materials first
+  await scanMaterials();
+
+  const apiMaterials = appData.materials || {};
+  let allFiles = [];
+  for (const [cat, files] of Object.entries(apiMaterials)) {
+    if (Array.isArray(files)) {
+      for (const f of files) {
+        const filename = typeof f === 'string' ? f : (f.filename || f.name || '');
+        if (filename) allFiles.push({ filename, category: cat, ...f });
+      }
+    }
+  }
+
+  // Also collect experience-linked paths
+  const pathToExperiences = {};
+  for (const exp of (appData.experiences.experiences || [])) {
+    for (const p of (exp.materials || [])) {
+      if (!p) continue;
+      if (!pathToExperiences[p]) pathToExperiences[p] = [];
+      pathToExperiences[p].push(exp.name);
+    }
+  }
+
+  const total = allFiles.length;
+
+  container.innerHTML = `
+    <div class="header">
+      <h2>材料库</h2>
+      <div class="header-actions">
+        <button class="btn" onclick="scanMaterialsAndRefresh()">&#128260; 刷新列表</button>
+      </div>
+    </div>
+
+    <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="card">
+        <div class="card-title">材料文件</div>
+        <div class="card-value">${total}</div>
+        <div class="card-sub">已上传</div>
+      </div>
+      <div class="card">
+        <div class="card-title">已关联</div>
+        <div class="card-value success">${Object.keys(pathToExperiences).length}</div>
+        <div class="card-sub">已关联到经历</div>
+      </div>
+      <div class="card">
+        <div class="card-title">存储方式</div>
+        <div class="card-value" style="font-size:13px;">API上传</div>
+        <div class="card-sub">通过后端服务存储</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div class="section-title">材料路径列表</div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="materialPathSearch" placeholder="搜索文件名..." oninput="filterMaterialPaths(this.value)" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);width:200px;">
+        </div>
+      </div>
+      <div id="materialGallery">
+        ${total === 0
+          ? '<div style="text-align:center;color:var(--text-secondary);padding:40px 0;"><div style="font-size:48px;margin-bottom:12px;">&#128194;</div><div>暂无材料</div><div style="font-size:13px;margin-top:8px;">在"经历管理"中添加经历时填写材料路径</div></div>'
+          : renderMaterialPathList(allFiles, pathToExperiences)
+        }
+      </div>
+    </div>
+  `;
+}
+
+async function scanMaterialsAndRefresh() {
+  await scanMaterials();
+  const main = document.getElementById('mainContent');
+  if (main && currentPage === 'materials') renderMaterialsPage(main);
+}
+
+function renderMaterialPathList(files, pathToExperiences) {
+  let html = '<div class="material-path-list">';
+  for (const f of files) {
+    const filename = f.filename || f.name || String(f);
+    const linked = pathToExperiences[filename] || [];
+    html += `
+      <div class="material-path-item" data-path="${(filename).toLowerCase()}">
+        <div class="path-name">${filename}</div>
+        <div class="path-linked">${linked.length > 0 ? '&#128204; ' + linked.join('、') : '未关联'}</div>
+      </div>
+    `;
+  }
+  html += '</div>';
+  return html;
+}
+
+function filterMaterialPaths(keyword) {
+  var container = document.getElementById('materialGallery');
+  if (!container) return;
+  var items = container.querySelectorAll('.material-path-item');
+  var k = keyword.toLowerCase();
+  for (var item of items) {
+    var path = item.getAttribute('data-path') || '';
+    item.style.display = path.indexOf(k) >= 0 ? '' : 'none';
+  }
+}
+
+
+// ======== Zongce Page ========
+
+async function renderZongcePage(container) {
+  const scores = await calculateAllScores();
+  
+  container.innerHTML = `
+    <div class="header">
+      <h2>综测预估</h2>
+      <div class="header-actions">
+        <button class="btn btn-primary" onclick="generateZongceReport()">生成申报表</button>
+      </div>
+    </div>
+    
+    <div class="card-grid" style="grid-template-columns: 1fr 2fr;">
+      <div class="card">
+        <div class="score-display">
+          <div class="score-number">${scores.total_score.toFixed(1)}</div>
+          <div class="score-label">预估综测总分</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-title">分类明细</div>
+        <div id="zongceDetails"></div>
+      </div>
+    </div>
+    
+    <div class="card" id="gpaInputCard">
+      <div class="section-title">学业成绩（GPA折合计算）</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 0;">
+        <label style="font-weight:600;">学生类型:</label>
+        <select id="studentTypeSelect" onchange="onStudentTypeChange(this.value)" style="padding:4px 8px;border-radius:6px;border:1px solid var(--border-color);">
+          <option value="undergrad" ${appData.studentType==='undergrad'?'selected':''}>本科生</option>
+          <option value="master" ${appData.studentType==='master'?'selected':''}>硕士研究生</option>
+          <option value="phd" ${appData.studentType==='phd'?'selected':''}>博士研究生</option>
+        </select>
+        ${appData.studentType === 'phd' 
+          ? '<span style="color:var(--text-secondary)">博士研究生无学术违纪即得60分，无需输入GPA</span>'
+          : '<label style="font-weight:600;">GPA/绩点:</label><input type="number" id="gpaInput" value="' + (appData.academicGpa || '') + '" step="0.01" min="0" max="4" placeholder="如3.85" oninput="onGpaInputChange(this.value)" style="width:80px;padding:4px 8px;border-radius:6px;border:1px solid var(--border-color);" /> <span style="color:var(--text-secondary)">得分 = GPA x 25 x 0.6 = <strong style="color:var(--primary)">' + (appData.academicGpa ? Math.min(parseFloat(appData.academicGpa) * 25 * 0.6, 60).toFixed(1) : '0.0') + '</strong> 分</span>'
+        }
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">加分项目清单</div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>分类</th>
+              <th>经历名称</th>
+              <th>匹配规则</th>
+              <th>加分</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody id="zongceTable"></tbody>
+        </table>
+      </div>
+    </div>
+  `;
+  
+  // Render category details
+  const details = document.getElementById('zongceDetails');
+  if (details) {
+    let html = '';
+    for (const [catId, catInfo] of Object.entries(scores.category_scores)) {
+      const st = catInfo.scoring_type || '加分';
+      const base = catInfo.base_score || 0;
+      const bonusMax = catInfo.bonus_max;
+      let displayMax, displayPct, displayScore, displayNote;
+      
+      if (st === '扣分制') {
+        displayMax = base;
+        displayScore = catInfo.current_score;
+        displayPct = Math.min((displayScore / displayMax) * 100, 100);
+        displayNote = `基准${base}，扣除${(base - displayScore).toFixed(1)}分`;
+      } else if (st === '基础分+加分') {
+        displayMax = base + (bonusMax || 0);
+        displayScore = catInfo.current_score;
+        displayPct = Math.min((displayScore / displayMax) * 100, 100);
+        const bonus = displayScore - base;
+        displayNote = `基础${base} + 加分${bonus.toFixed(1)}`;
+        if (bonusMax) displayNote += ` (加分上限${bonusMax})`;
+      } else if (st === '计算制') {
+        displayMax = catInfo.max_score || 0;
+        displayScore = catInfo.current_score;
+        displayPct = displayMax > 0 ? Math.min((displayScore / displayMax) * 100, 100) : 0;
+        if (appData.studentType === 'phd') {
+          displayNote = '博士固定60分（无学术违纪）';
+        } else if (appData.academicGpa) {
+          displayNote = 'GPA ' + appData.academicGpa + ' x 25 x 0.6 = ' + displayScore.toFixed(1) + '分';
+        } else {
+          displayNote = '请在下方GPA输入区填写成绩';
+        }
+      } else {
+        displayMax = catInfo.max_score || 0;
+        displayScore = catInfo.current_score;
+        displayPct = displayMax > 0 ? Math.min((displayScore / displayMax) * 100, 100) : 0;
+        displayNote = `${catInfo.items.length} 个项目`;
+      }
+      
+      if (displayMax > 0 || st === '计算制') {
+        const color = CATEGORY_COLORS[catId] || '#2563eb';
+        html += `
+          <div style="margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+              <span style="font-weight:600;">${catInfo.name} <span style="font-size:11px;color:var(--text-secondary)">[${st}]</span></span>
+              <span>${displayScore.toFixed(1)} / ${displayMax} 分</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${displayPct}%;background:${color}"></div>
+            </div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">
+              ${displayNote}
+            </div>
+          </div>
+        `;
+      }
+    }
+    details.innerHTML = html;
+  }
+  
+  // Render score table
+  const tbody = document.getElementById('zongceTable');
+  if (tbody) {
+    tbody.innerHTML = scores.experiences.map(item => {
+      const catName = CATEGORIES[item.category] || item.category;
+      const rule = getRuleById(item.rule_matched);
+      const ruleName = rule ? rule.name : (item.rule_matched || '未匹配');
+      const hasRule = !!item.rule_matched;
+      const hasScore = item.score > 0;
+      
+      return `
+        <tr>
+          <td><span class="tag tag-blue">${catName}</span></td>
+          <td>${item.name}</td>
+          <td>${ruleName}</td>
+          <td><strong>${hasScore ? (item.score >= 0 ? '+' : '') + item.score.toFixed(1) : '-'}</strong></td>
+          <td>
+            ${hasRule
+              ? (hasScore ? '<span class="tag tag-green">已计分</span>' : '<span class="tag tag-gray">0分</span>')
+              : '<span class="tag tag-orange">待匹配</span>'}
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+}
+
+function generateZongceReport() {
+  alert('综测申报表生成功能需要在本地运行 Python 脚本：\n\npython generate_zongce.py\n\n生成的文件将保存在 output/综测申报表/ 目录下。');
+}
+
+// ======== Missing Page ========
+
+async function renderMissingPage(container) {
+  const issues = await checkMissing();
+  const unlinked = findUnlinkedMaterials();
+  
+  container.innerHTML = `
+    <div class="header">
+      <h2>缺失提醒</h2>
+      <div class="header-actions">
+        <button class="btn btn-primary" onclick="switchPage('materials')">去导入材料</button>
+      </div>
+    </div>
+    
+    <div id="missingAlerts"></div>
+    <div class="card">
+      <div class="section-title">材料缺失 / 待确认项</div>
+      <div id="missingList"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="section-title">未关联的证明材料</div>
+      <div id="unlinkedMaterials"></div>
+    </div>
+  `;
+  
+  const alerts = document.getElementById('missingAlerts');
+  if (alerts) {
+    if (issues.length === 0 && unlinked.length === 0) {
+      alerts.innerHTML = '<div class="alert alert-success">所有材料完整，无需处理！</div>';
+    }
+  }
+  
+  const list = document.getElementById('missingList');
+  if (list) {
+    if (issues.length === 0) {
+      list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🎉</div><p>没有缺失项</p></div>';
+    } else {
+      list.innerHTML = issues.map(issue => {
+        const exp = (appData.experiences.experiences || []).find(e => e.id === issue.id);
+        if (!exp) return '';
+        
+        const missingMats = issue.missing_materials.map(m =>
+          `<div style="display:flex;align-items:center;gap:6px;margin:4px 0;font-size:13px;color:var(--danger)"><span>❌</span> ${m}</div>`
+        ).join('');
+        
+        const needsConfirm = issue.needs_confirm.map(c =>
+          `<div style="display:flex;align-items:center;gap:6px;margin:4px 0;font-size:13px;color:var(--warning)"><span>⚠️</span> ${c}</div>`
+        ).join('');
+        
+        return `
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;">
+            <div style="font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+              <span>${exp.name}</span>
+              <span class="tag tag-blue">${CATEGORIES[exp.category] || exp.category}</span>
+            </div>
+            ${missingMats}
+            ${needsConfirm}
+            <div style="margin-top:10px;">
+              <button class="btn" onclick="editExperience('${exp.id}')">编辑补充</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+  
+  const unlinkedDiv = document.getElementById('unlinkedMaterials');
+  if (unlinkedDiv) {
+    if (unlinked.length === 0) {
+      unlinkedDiv.innerHTML = '<p style="color:var(--text-secondary)">所有材料已关联</p>';
+    } else {
+      unlinkedDiv.innerHTML = `
+        <div class="alert alert-warning">
+          发现 ${unlinked.length} 个未关联的证明材料，建议创建对应经历并关联
+        </div>
+        <div style="max-height:300px;overflow-y:auto;">
+          ${unlinked.map(u => {
+            const parts = u.split('/');
+            return `<div class="material-preview">
+              <span class="file-icon">📄</span>
+              <span style="flex:1;">${parts[parts.length-1]}</span>
+              <span class="tag tag-gray">${CATEGORIES[parts[1]] || parts[1]}</span>
+            </div>`;
+          }).join('')}
+        </div>
+      `;
+    }
+  }
+}
+
+// ======== Settings Page ========
+
+function renderSettingsPage(container) {
+  const info = appData.experiences.student_info || {};
+
+  // Compute material stats
+  const apiMaterials = appData.materials || {};
+  let allFiles = [];
+  for (const [cat, files] of Object.entries(apiMaterials)) {
+    if (Array.isArray(files)) {
+      for (const f of files) {
+        const filename = typeof f === 'string' ? f : (f.filename || f.name || '');
+        if (filename) allFiles.push({ filename, category: cat, ...f });
+      }
+    }
+  }
+  const pathToExperiences = {};
+  for (const exp of (appData.experiences.experiences || [])) {
+    for (const p of (exp.materials || [])) {
+      if (!p) continue;
+      if (!pathToExperiences[p]) pathToExperiences[p] = [];
+      pathToExperiences[p].push(exp.name);
+    }
+  }
+  const total = allFiles.length;
+
+  container.innerHTML = `
+    <div class="header">
+      <h2>设置</h2>
+    </div>
+
+    <div class="card">
+      <div class="section-title">学生信息</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>姓名</label>
+          <input type="text" id="setName" value="${info.name || ''}" placeholder="你的姓名">
+        </div>
+        <div class="form-group">
+          <label>学号</label>
+          <input type="text" id="setStudentId" value="${info.student_id || ''}" placeholder="学号">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>学院</label>
+          <input type="text" id="setCollege" value="${info.college || ''}" placeholder="如：计算机学院">
+        </div>
+        <div class="form-group">
+          <label>专业</label>
+          <input type="text" id="setMajor" value="${info.major || ''}" placeholder="如：软件工程">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>年级</label>
+          <input type="text" id="setGrade" value="${info.grade || ''}" placeholder="如：2023级">
+        </div>
+        <div class="form-group">
+          <label>班级</label>
+          <input type="text" id="setClass" value="${info.class || ''}" placeholder="如：软件2301班">
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="saveStudentInfo()">保存信息</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="section-title">数据管理</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+        <button class="btn" onclick="exportAllData()">导出全部数据</button>
+        <button class="btn" onclick="downloadRules()">导出规则备份</button>
+        <button class="btn" onclick="reimportRules()">重新导入细则</button>
+        <label class="btn" style="cursor:pointer;">
+          <input type="file" accept=".json" onchange="importData(this)" style="display:none;">
+          导入备份数据
+        </label>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="section-title">材料路径列表</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div style="font-size:13px;color:var(--text-secondary);">共 ${total} 个材料路径</div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="materialPathSearch" placeholder="搜索文件名..." oninput="filterMaterialPaths(this.value)" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);width:200px;">
+        </div>
+      </div>
+      <div id="materialGallery">
+        ${total === 0
+          ? '<div style="text-align:center;color:var(--text-secondary);padding:40px 0;"><div style="font-size:48px;margin-bottom:12px;">&#128194;</div><div>暂无材料</div><div style="font-size:13px;margin-top:8px;">在"经历管理"中添加经历时填写材料路径</div></div>'
+          : renderMaterialPathList(allFiles, pathToExperiences)
+        }
+      </div>
+    </div>
+  `;
+}
+
+function saveStudentInfo() {
+  appData.experiences.student_info = {
+    name: document.getElementById('setName').value.trim(),
+    student_id: document.getElementById('setStudentId').value.trim(),
+    college: document.getElementById('setCollege').value.trim(),
+    major: document.getElementById('setMajor').value.trim(),
+    grade: document.getElementById('setGrade').value.trim(),
+    class: document.getElementById('setClass').value.trim()
+  };
+  saveData();
+  alert('信息已保存');
+}
+
+function reimportRules() {
+  wizardStep = 2;
+  appData.initialized = false;
+  renderMainContent();
+}
+
+function downloadRules() {
+  downloadJson('rules_backup_' + new Date().toISOString().slice(0,10) + '.json', appData.rules);
+}
+
+function exportAllData() {
+  const exportData = {
+    experiences: appData.experiences,
+    rules: appData.rules,
+    tags: appData.tags,
+    export_time: new Date().toISOString()
+  };
+  downloadJson('archive_backup_' + new Date().toISOString().slice(0,10) + '.json', exportData);
+}
+
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.experiences) appData.experiences = data.experiences;
+      if (data.rules) appData.rules = data.rules;
+      if (data.tags) appData.tags = data.tags;
+      saveData();
+      alert('导入成功');
+      renderMainContent();
+    } catch (err) {
+      alert('导入失败：' + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ======== Core Logic Functions ========
+
+function getRuleById(ruleId) {
+  if (!ruleId) return null;
+  for (const cat of (appData.rules.categories || [])) {
+    for (const sub of (cat.subcategories || [])) {
+      if (sub.id === ruleId) return sub;
+    }
+  }
+  return null;
+}
+
+function getCategoryByRuleId(ruleId) {
+  if (!ruleId) return null;
+  for (const cat of (appData.rules.categories || [])) {
+    for (const sub of (cat.subcategories || [])) {
+      if (sub.id === ruleId) return cat;
+    }
+  }
+  return null;
+}
+
+function estimateScore(exp) {
+  const ruleId = exp.rule_id || '';
+  if (!ruleId) return { score: 0, rule_matched: null, category: null, notes: '未匹配综测细则', scoring_type: 'unknown' };
+  
+  const rule = getRuleById(ruleId);
+  if (!rule) return { score: 0, rule_matched: null, category: null, notes: '未找到规则: ' + ruleId, scoring_type: 'unknown' };
+  
+  const category = getCategoryByRuleId(ruleId);
+  const catId = category ? category.id : null;
+  const totalStructure = appData.rules.total_structure || {};
+  const catStruct = totalStructure[catId] || {};
+  const scoringType = catStruct.type || '加分';
+  
+  const baseScore = rule.score || 0;
+  const ruleMax = rule.max_score;
+  const quantity = exp.quantity || 1;
+  let totalScore = baseScore * quantity;
+  
+  // 区间分：如果规则自身有 max_score 且与 score 不同
+  if (ruleMax !== undefined && ruleMax !== baseScore && baseScore > 0) {
+    totalScore = Math.min(totalScore, ruleMax * quantity);
+  }
+  
+  const isDeduction = baseScore < 0;
+  let notesParts = ['匹配规则: ' + (rule.name || '')];
+  if (rule.notes) notesParts.push(rule.notes);
+  
+  return {
+    score: totalScore,
+    rule_matched: ruleId,
+    category: catId,
+    category_name: category ? category.name : null,
+    scoring_type: scoringType,
+    is_deduction: isDeduction,
+    rule_max_score: ruleMax,
+    notes: notesParts.join(' | ')
+  };
+}
+
+async function calculateAllScores() {
+  try {
+    const scores = await apiGet('/api/score');
+    return scores;
+  } catch (e) {
+    console.error('Score calculation error:', e);
+    // Return fallback structure for file:// protocol (no server)
+    const exps = appData.experiences.experiences || [];
+    const totalScore = exps.reduce((sum, e) => sum + (e.score || 0), 0);
+    return {
+      category_scores: {
+        basic_quality: { name: '基本素质测评', scoring_type: '扣分制', current_score: 10, base_score: 10, max_score: 10 },
+        academic_score: { name: '学业成绩', scoring_type: '计算制', current_score: 53.7, base_score: 0, max_score: 60 },
+        academic_research: { name: '学术科研加分', scoring_type: '基础分+加分', current_score: 10.8, base_score: 10, max_score: 20, bonus_max: 10 },
+        practice: { name: '实践能力加分', scoring_type: '基础分+加分', current_score: 10.8, base_score: 10, max_score: 20, bonus_max: 10 }
+      },
+      total_score: totalScore,
+      total_max: 100
+    };
+  }
+}
+
+function onGpaInputChange(value) {
+  appData.academicGpa = value;
+  var main = document.getElementById('mainContent');
+  if (main) renderZongcePage(main);
+}
+
+function onStudentTypeChange(value) {
+  appData.studentType = value;
+  var main = document.getElementById('mainContent');
+  if (main) renderZongcePage(main);
+}
+
+async function checkMissing() {
+  try {
+    const result = await apiGet('/api/check');
+    return result.issues || [];
+  } catch (e) {
+    // Fallback: check issues locally for file:// protocol
+    const issues = [];
+    const exps = appData.experiences.experiences || [];
+    for (const exp of exps) {
+      const missing = [];
+      const needsConfirm = [];
+      
+      if (exp.status === '待确认') {
+        needsConfirm.push('加分规则或计算方式需人工确认');
+      }
+      if (!exp.materials || exp.materials.length === 0) {
+        missing.push('未关联任何证明材料');
+      }
+      
+      if (missing.length > 0 || needsConfirm.length > 0) {
+        issues.push({
+          id: exp.id,
+          missing_materials: missing,
+          needs_confirm: needsConfirm
+        });
+      }
+    }
+    return issues;
+  }
+}
+
+function findUnlinkedMaterials() {
+  const linked = new Set();
+  for (const exp of (appData.experiences.experiences || [])) {
+    for (const mat of (exp.materials || [])) linked.add(mat);
+  }
+  
+  const allMaterials = [];
+  for (const files of Object.values(appData.materials)) {
+    allMaterials.push(...files);
+  }
+  
+  return allMaterials.filter(m => !linked.has(m));
+}
+
+function suggestRule(exp) {
+  const suggestions = [];
+  const expName = (exp.name || '').toLowerCase();
+  const expCategory = (exp.category || '').toLowerCase();
+  const achievement = (exp.achievement || '').toLowerCase();
+  
+  for (const cat of (appData.rules.categories || [])) {
+    for (const sub of (cat.subcategories || [])) {
+      let score = 0;
+      const ruleName = (sub.name || '').toLowerCase();
+      
+      for (const word of ruleName.split(/\s+/)) {
+        if (word && expName.includes(word)) score += 3;
+      }
+      
+      if ((cat.id || '').toLowerCase() === expCategory || (cat.name || '').toLowerCase() === expCategory) {
+        score += 2;
+      }
+      
+      for (const level of ['一等','二等','三等','特等奖','国家级','省级','校级','市级','院级']) {
+        if (achievement.includes(level) && ruleName.includes(level)) {
+          score += 3;
+        }
+      }
+      
+      if (score > 0) {
+        suggestions.push({
+          rule_id: sub.id,
+          rule_name: sub.name,
+          category: cat.name,
+          score: sub.score || 0,
+          confidence: score
+        });
+      }
+    }
+  }
+  
+  suggestions.sort((a, b) => b.confidence - a.confidence);
+  return suggestions.slice(0, 5);
+}
+
+// ======== Experience Modal ========
+
+function showAddExperienceModal() {
+  editingExpId = null;
+  renderExperienceModal();
+  document.getElementById('expModal').classList.add('active');
+}
+
+function editExperience(id) {
+  const exp = (appData.experiences.experiences || []).find(e => e.id === id);
+  if (!exp) return;
+  
+  editingExpId = id;
+  renderExperienceModal(exp);
+  document.getElementById('expModal').classList.add('active');
+}
+
+function renderExperienceModal(exp = null) {
+  const modalExists = document.getElementById('expModal');
+  if (modalExists) {
+    modalExists.remove();
+  }
+  
+  const isEdit = !!exp;
+  const title = isEdit ? '编辑经历' : '新增经历';
+  
+  const modal = document.createElement('div');
+  modal.id = 'expModal';
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal">
+      <div class="modal-header">
+        <h3>${title}</h3>
+        <button class="modal-close" onclick="closeExpModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="expForm">
+          <div class="form-group">
+            <label>经历名称 *</label>
+            <input type="text" id="expName" required value="${exp ? exp.name : ''}" placeholder="如：全国大学生数学建模竞赛">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>类型 *</label>
+              <select id="expCategory" required>
+                <option value="">请选择</option>
+                ${Object.entries(CATEGORIES).map(([id, name]) => 
+                  `<option value="${id}" ${exp && exp.category === id ? 'selected' : ''}>${name}</option>`
+                ).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>角色</label>
+              <input type="text" id="expRole" value="${exp ? exp.role : ''}" placeholder="如：队长、负责人">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>开始日期 *</label>
+              <input type="date" id="expStartDate" required value="${exp ? exp.start_date : ''}">
+            </div>
+            <div class="form-group">
+              <label>结束日期 *</label>
+              <input type="date" id="expEndDate" required value="${exp ? exp.end_date : ''}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>获得成果/奖项</label>
+            <input type="text" id="expAchievement" value="${exp ? exp.achievement : ''}" placeholder="如：国家级一等奖、优秀志愿者">
+          </div>
+          <div class="form-group">
+            <label>具体做了什么</label>
+            <textarea id="expDescription" placeholder="详细描述你的具体工作、贡献和过程">${exp ? exp.description : ''}</textarea>
+          </div>
+          <div class="form-group">
+            <label>能力提升（逗号分隔）</label>
+            <input type="text" id="expSkills" value="${exp ? (exp.skills_gained || []).join(', ') : ''}" placeholder="如：Python编程, 数据分析, 团队协作">
+          </div>
+          <div class="form-group">
+            <label>综测规则</label>
+            <select id="expRuleId">
+              <option value="">请选择（留空可稍后匹配）</option>
+              ${renderRuleOptions(exp ? exp.rule_id : '')}
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>数量</label>
+              <input type="number" id="expQuantity" value="${exp ? exp.quantity : 1}" min="1">
+            </div>
+            <div class="form-group">
+              <label>标签（逗号分隔）</label>
+              <input type="text" id="expTags" value="${exp ? (exp.tags || []).join(', ') : ''}" placeholder="自定义标签">
+            </div>
+          </div>
+          <div class="form-group">
+            <label style="display:flex;justify-content:space-between;align-items:center;">
+              <span>关联材料路径</span>
+              <span style="font-size:12px;color:var(--text-secondary);">每行一个，相对于页面根目录</span>
+            </label>
+            <textarea id="expMaterials" placeholder="materials/竞赛/证书.jpg
+materials/科研/论文截图.png" style="min-height:80px;">${exp ? (exp.materials || []).join('\n') : ''}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label>备注</label>
+            <textarea id="expNotes" placeholder="其他需要记录的信息">${exp ? exp.notes : ''}</textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeExpModal()">取消</button>
+        ${isEdit ? '<button class="btn btn-danger" onclick="deleteCurrentExp()">删除</button>' : ''}
+        <button class="btn btn-primary" onclick="saveExperience()">保存</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeExpModal();
+  });
+
+}
+
+function renderRuleOptions(selectedId) {
+  let html = '';
+  for (const cat of (appData.rules.categories || [])) {
+    html += `<optgroup label="${cat.name}">`;
+    for (const sub of (cat.subcategories || [])) {
+      const selected = sub.id === selectedId ? 'selected' : '';
+      const scoreStr = sub.score >= 0 ? '+' + sub.score : String(sub.score);
+      html += `<option value="${sub.id}" ${selected}>${sub.name} (${scoreStr}分)</option>`;
+    }
+    html += '</optgroup>';
+  }
+  return html;
+}
+
+function closeExpModal() {
+  const modal = document.getElementById('expModal');
+  if (modal) modal.classList.remove('active');
+  editingExpId = null;
+}
+
+function saveExperience() {
+  const name = document.getElementById('expName').value.trim();
+  const category = document.getElementById('expCategory').value;
+  const startDate = document.getElementById('expStartDate').value;
+  const endDate = document.getElementById('expEndDate').value;
+  
+  if (!name || !category || !startDate || !endDate) {
+    alert('请填写必填项（名称、类型、起止日期）');
+    return;
+  }
+  
+  // 从textarea读取材料路径（每行一个）
+  const materialsText = document.getElementById('expMaterials').value;
+  const materials = materialsText.split('\n').map(s => s.trim()).filter(s => s);
+  
+  const expData = {
+    id: editingExpId || generateId(),
+    name: name,
+    category: category,
+    start_date: startDate,
+    end_date: endDate,
+    role: document.getElementById('expRole').value.trim(),
+    achievement: document.getElementById('expAchievement').value.trim(),
+    description: document.getElementById('expDescription').value.trim(),
+    skills_gained: document.getElementById('expSkills').value.split(',').map(s => s.trim()).filter(s => s),
+    materials: materials,
+    rule_id: document.getElementById('expRuleId').value.trim(),
+    quantity: parseInt(document.getElementById('expQuantity').value) || 1,
+    tags: document.getElementById('expTags').value.split(',').map(s => s.trim()).filter(s => s),
+    notes: document.getElementById('expNotes').value.trim(),
+    created_at: editingExpId ? undefined : new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+  
+  const exps = appData.experiences.experiences || [];
+  const idx = exps.findIndex(e => e.id === editingExpId);
+  
+  if (idx >= 0) {
+    expData.created_at = exps[idx].created_at;
+    exps[idx] = expData;
+  } else {
+    exps.push(expData);
+  }
+  
+  appData.experiences.experiences = exps;
+  appData.experiences.metadata = appData.experiences.metadata || {};
+  appData.experiences.metadata.total_experiences = exps.length;
+  appData.experiences.metadata.last_updated = new Date().toISOString();
+  
+  saveData();
+  closeExpModal();
+  
+  if (currentPage === 'experiences') renderExperiencesTable();
+  else if (currentPage === 'dashboard') renderMainContent();
+  else if (currentPage === 'missing') renderMainContent();
+  else if (currentPage === 'zongce') renderMainContent();
+}
+
+function deleteCurrentExp() {
+  if (!editingExpId) return;
+  if (!confirm('确定要删除这条经历吗？此操作不可恢复。')) return;
+  
+  appData.experiences.experiences = (appData.experiences.experiences || []).filter(e => e.id !== editingExpId);
+  appData.experiences.metadata = appData.experiences.metadata || {};
+  appData.experiences.metadata.total_experiences = appData.experiences.experiences.length;
+  appData.experiences.metadata.last_updated = new Date().toISOString();
+  
+  saveData();
+  closeExpModal();
+  
+  if (currentPage === 'experiences') renderExperiencesTable();
+  else if (currentPage === 'dashboard') renderMainContent();
+  else if (currentPage === 'missing') renderMainContent();
+  else if (currentPage === 'zongce') renderMainContent();
+}
+
+function generateId() {
+  return 'exp_' + Math.random().toString(36).substring(2, 10);
+}
+
+// ======== File System & Data Management ========
+
+// File System API functions removed — now using HTTP API
+
+async function scanMaterials() {
+  try {
+    const materials = await apiGet('/api/materials/scan');
+    appData.materials = materials || {};
+  } catch (e) {
+    console.error('Scan materials error:', e);
+    appData.materials = {};
+  }
+}
+
+async function saveData() {
+  // Save experiences
+  try {
+    for (const exp of (appData.experiences.experiences || [])) {
+      await apiPost('/api/experiences', { experience: exp });
+    }
+  } catch (e) {
+    console.error('Save experiences error:', e);
+  }
+
+  // Save rules
+  try {
+    await apiPost('/api/rules', appData.rules);
+  } catch (e) {
+    console.error('Save rules error:', e);
+  }
+
+  // Save tags
+  try {
+    await apiPost('/api/tags', appData.tags);
+  } catch (e) {
+    console.error('Save tags error:', e);
+  }
+}
+
+function downloadJson(filename, data) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ======== Initialization ========
+
+function tryLoadPreloadedData() {
+  let loaded = false;
+
+  // Check inline PRELOADED_RULES first (fallback if server not running)
+  if (typeof PRELOADED_RULES !== 'undefined' && PRELOADED_RULES && PRELOADED_RULES.categories && PRELOADED_RULES.categories.length > 0) {
+    appData.rules = PRELOADED_RULES;
+    appData.initialized = true;
+    loaded = true;
+  }
+
+  // Check inline PRELOADED_EXPERIENCES (demo data for file:// protocol)
+  if (typeof PRELOADED_EXPERIENCES !== 'undefined' && PRELOADED_EXPERIENCES && PRELOADED_EXPERIENCES.experiences) {
+    appData.experiences = PRELOADED_EXPERIENCES;
+    loaded = true;
+  }
+
+  // Check inline PRELOADED_TAGS
+  if (typeof PRELOADED_TAGS !== 'undefined' && PRELOADED_TAGS && PRELOADED_TAGS.skill_tags) {
+    appData.tags = PRELOADED_TAGS;
+    loaded = true;
+  }
+
+  return loaded;
+}
+
+async function init() {
+  renderNav();
+
+  // First try to load inline preloaded data (for file:// protocol)
+  tryLoadPreloadedData();
+
+  // Then try to load from API (overrides preloaded if server is running)
+  try {
+    const rules = await apiGet('/api/rules');
+    if (rules && rules.categories && rules.categories.length > 0) {
+      appData.rules = rules;
+      appData.initialized = true;
+    }
+  } catch (e) {
+    // Keep preloaded rules if API fails
+    if (!appData.initialized) {
+      tryLoadPreloadedData();
+    }
+  }
+
+  try {
+    const exp = await apiGet('/api/experiences');
+    if (exp && exp.experiences) appData.experiences = exp;
+  } catch (e) {
+    // Keep preloaded experiences if API fails
+  }
+
+  try {
+    const tags = await apiGet('/api/tags');
+    if (tags && tags.skill_tags) appData.tags = tags;
+  } catch (e) {
+    // Keep preloaded tags if API fails
+  }
+
+  renderMainContent();
+}
+
+init();
+</script>
+</body>
+</html>

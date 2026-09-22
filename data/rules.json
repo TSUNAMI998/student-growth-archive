@@ -1,0 +1,1125 @@
+{
+  "schema_version": "2.0",
+  "college_name": "海啸大学x学院",
+  "academic_year": "2025-2026",
+  "categories": [
+    {
+      "id": "basic_quality",
+      "name": "基本素质测评",
+      "description": "基准满分10分，采用异常扣分制。上一学年未受纪律处分且班级民主评议无重大问题的，得满分。",
+      "max_score": 10.0,
+      "subcategories": [
+        {
+          "id": "basic_quality_full",
+          "name": "基本素质测评满分",
+          "score": 10.0,
+          "max_score": 10.0,
+          "evidence_required": [
+            "班级民主评议通过"
+          ],
+          "status": "已提取",
+          "notes": "未受学校纪律处分，且班级民主评议未反映出经核实的重大品行、诚信、纪律问题",
+          "unit": "次"
+        },
+        {
+          "id": "basic_quality_deduct_thought",
+          "name": "思想政治方面问题扣分",
+          "score": -0.5,
+          "max_score": -0.1,
+          "evidence_required": [
+            "班级测评小组与班主任确认的问题记录"
+          ],
+          "status": "已提取",
+          "notes": "班级民主评议中实名反映的具体、可核实问题，每方面酌情扣0.1-0.5分",
+          "unit": "次"
+        },
+        {
+          "id": "basic_quality_deduct_behavior",
+          "name": "行为规范方面问题扣分",
+          "score": -0.5,
+          "max_score": -0.1,
+          "evidence_required": [
+            "班级测评小组与班主任确认的问题记录"
+          ],
+          "status": "已提取",
+          "notes": "同思想政治扣分规则",
+          "unit": "次"
+        },
+        {
+          "id": "basic_quality_deduct_attitude",
+          "name": "学习态度方面问题扣分",
+          "score": -0.5,
+          "max_score": -0.1,
+          "evidence_required": [
+            "班级测评小组与班主任确认的问题记录"
+          ],
+          "status": "已提取",
+          "notes": "同思想政治扣分规则",
+          "unit": "次"
+        },
+        {
+          "id": "basic_quality_deduct_health",
+          "name": "身心健康方面问题扣分",
+          "score": -0.5,
+          "max_score": -0.1,
+          "evidence_required": [
+            "班级测评小组与班主任确认的问题记录"
+          ],
+          "status": "已提取",
+          "notes": "同思想政治扣分规则",
+          "unit": "次"
+        }
+      ]
+    },
+    {
+      "id": "academic_score",
+      "name": "学业成绩测评",
+      "description": "按学年计算，满分60分。本科生得分=GPA×25×0.6；硕士生得分=课程加权平均绩点×25×0.6；博士生无学术违纪即得60分。",
+      "max_score": 60.0,
+      "calc_type": "gpa",
+      "subcategories": [
+        {
+          "id": "academic_undergrad",
+          "name": "本科生学业成绩",
+          "calc_type": "gpa",
+          "formula": "GPA * 25 * 0.6",
+          "score": 0.0,
+          "max_score": 60.0,
+          "evidence_required": [
+            "教务处盖章成绩单"
+          ],
+          "status": "已提取",
+          "notes": "得分=GPA×25×0.6，课程范围为本学年所修所有课程。P/NP课程P不纳入均分，NP视同不及格；W/EX不计入；缓考I取得成绩后计入。",
+          "unit": "学年"
+        },
+        {
+          "id": "academic_master",
+          "name": "硕士研究生学业成绩",
+          "calc_type": "gpa",
+          "formula": "课程加权平均绩点 * 25 * 0.6",
+          "score": 0.0,
+          "max_score": 60.0,
+          "evidence_required": [
+            "成绩单"
+          ],
+          "status": "已提取",
+          "notes": "得分=课程加权平均绩点×25×0.6，课程范围包括专业必修和全校必修",
+          "unit": "学年"
+        },
+        {
+          "id": "academic_phd",
+          "name": "博士研究生学业成绩",
+          "calc_type": "fixed",
+          "formula": "60",
+          "score": 60.0,
+          "max_score": 60.0,
+          "evidence_required": [
+            "无学术违纪证明"
+          ],
+          "status": "已提取",
+          "notes": "上一学年无学术违纪情况即得60分",
+          "unit": "学年"
+        },
+        {
+          "id": "academic_fail_warning",
+          "name": "两门必修课不及格",
+          "calc_type": "flag",
+          "formula": "不合格标志",
+          "score": 0.0,
+          "max_score": 0.0,
+          "evidence_required": [
+            "成绩单"
+          ],
+          "status": "已提取",
+          "notes": "上一学年出现两门必修课不及格者，学业学术测评不合格。重修及格以重修成绩为准。",
+          "unit": "学年"
+        }
+      ]
+    },
+    {
+      "id": "academic_research",
+      "name": "学术科研测评加分",
+      "description": "基础分10分+加分。加分上限受实践能力加分约束，两者之和不超过10分。成果时间范围为上一年度9月1日至本年度8月31日，需以学生身份且署名含海啸大学。",
+      "max_score": 10.0,
+      "subcategories": [
+        {
+          "id": "research_paper_top4_independent",
+          "name": "四大顶刊独立论文",
+          "score": 3.0,
+          "max_score": 3.0,
+          "evidence_required": [
+            "论文原件/复印件",
+            "署名含海啸大学"
+          ],
+          "status": "已提取",
+          "notes": "《中国社会科学》《中国法学》《法学研究》《中外法学》；合作撰写为3/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_top4_coauthor",
+          "name": "四大顶刊合作论文",
+          "score": 3.0,
+          "max_score": 3.0,
+          "evidence_required": [
+            "论文原件/复印件",
+            "署名含海啸大学",
+            "合作人数证明"
+          ],
+          "status": "已提取",
+          "notes": "个人加分为3/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_cssci_independent",
+          "name": "CSSCI来源期刊独立论文（除四大外）",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "论文原件/复印件",
+            "署名含海啸大学",
+            "CSSCI来源期刊证明"
+          ],
+          "status": "已提取",
+          "notes": "当年《CSSCI来源期刊》和《CSSCI来源集刊》所列除四大期刊外的核心期刊；合作为1.5/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_cssci_coauthor",
+          "name": "CSSCI来源期刊合作论文（除四大外）",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "论文原件/复印件",
+            "署名含海啸大学",
+            "CSSCI来源期刊证明",
+            "合作人数证明"
+          ],
+          "status": "已提取",
+          "notes": "个人加分为1.5/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_cssci_ext_independent",
+          "name": "CSSCI扩展版独立论文",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": [
+            "论文原件/复印件",
+            "署名含海啸大学",
+            "CSSCI扩展版证明"
+          ],
+          "status": "已提取",
+          "notes": "当年《CSSCI扩展版来源期刊》所列期刊；合作为1/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_cssci_ext_coauthor",
+          "name": "CSSCI扩展版合作论文",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": [
+            "论文原件/复印件",
+            "署名含海啸大学",
+            "CSSCI扩展版证明",
+            "合作人数证明"
+          ],
+          "status": "已提取",
+          "notes": "个人加分为1/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_other_independent",
+          "name": "其他正式出版报刊独立论文",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": [
+            "论文原件/复印件",
+            "署名含海啸大学"
+          ],
+          "status": "已提取",
+          "notes": "除上述期刊外的国家正式出版的其他报刊；合作为0.2/合作人数；增刊酌情降一档",
+          "unit": "篇"
+        },
+        {
+          "id": "research_paper_other_coauthor",
+          "name": "其他正式出版报刊合作论文",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": [
+            "论文原件/复印件",
+            "署名含海啸大学",
+            "合作人数证明"
+          ],
+          "status": "已提取",
+          "notes": "个人加分为0.2/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_ssci_q1q2_independent",
+          "name": "SSCI Q1/Q2区独立论文",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "论文原件/复印件",
+            "期刊官方收录证明",
+            "JCR分区截图",
+            "署名含海啸大学"
+          ],
+          "status": "已提取",
+          "notes": "以JCR当年分区为准；合作为1.5/合作人数；与CSSCI同成果取高分不重复",
+          "unit": "篇"
+        },
+        {
+          "id": "research_ssci_q1q2_coauthor",
+          "name": "SSCI Q1/Q2区合作论文",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "论文原件/复印件",
+            "期刊官方收录证明",
+            "JCR分区截图",
+            "署名含海啸大学",
+            "合作人数证明"
+          ],
+          "status": "已提取",
+          "notes": "个人加分为1.5/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_ssci_q3q4_independent",
+          "name": "SSCI Q3/Q4区及其他SSCI独立论文",
+          "score": 0.8,
+          "max_score": 0.8,
+          "evidence_required": [
+            "论文原件/复印件",
+            "期刊官方收录证明",
+            "JCR分区截图",
+            "署名含海啸大学"
+          ],
+          "status": "已提取",
+          "notes": "合作为0.8/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_ssci_q3q4_coauthor",
+          "name": "SSCI Q3/Q4区及其他SSCI合作论文",
+          "score": 0.8,
+          "max_score": 0.8,
+          "evidence_required": [
+            "论文原件/复印件",
+            "期刊官方收录证明",
+            "JCR分区截图",
+            "署名含海啸大学",
+            "合作人数证明"
+          ],
+          "status": "已提取",
+          "notes": "个人加分为0.8/合作人数；与导师合作时不含导师",
+          "unit": "篇"
+        },
+        {
+          "id": "research_book_independent",
+          "name": "独立撰写法学著作",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "著作原件/版权页复印件",
+            "署名含海啸大学"
+          ],
+          "status": "已提取",
+          "notes": "合著为1.5/合作人数；与已加分论文可叠加，但著作+论文总分不超过5分；翻译著作不加分",
+          "unit": "本"
+        },
+        {
+          "id": "research_book_coauthor",
+          "name": "合著法学著作",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "著作原件/版权页复印件",
+            "署名含海啸大学",
+            "合作人数证明"
+          ],
+          "status": "已提取",
+          "notes": "个人加分为1.5/合作人数；与导师合作时不含导师；与论文可叠加但总分不超5分",
+          "unit": "本"
+        },
+        {
+          "id": "research_award_national_1st",
+          "name": "国家级学术征文一等奖",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "特等奖比照一等奖；合作作品个人加分为1/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_national_2nd",
+          "name": "国家级学术征文二等奖",
+          "score": 0.7,
+          "max_score": 0.7,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.7/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_national_3rd",
+          "name": "国家级学术征文三等奖",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.5/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_provincial_1st",
+          "name": "省/部级学术征文一等奖",
+          "score": 0.7,
+          "max_score": 0.7,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "特等奖比照一等奖；合作作品个人加分为0.7/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_provincial_2nd",
+          "name": "省/部级学术征文二等奖",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.5/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_provincial_3rd",
+          "name": "省/部级学术征文三等奖",
+          "score": 0.3,
+          "max_score": 0.3,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.3/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_school_1st",
+          "name": "校级学术征文一等奖",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "特等奖比照一等奖；合作作品个人加分为0.5/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_school_2nd",
+          "name": "校级学术征文二等奖",
+          "score": 0.3,
+          "max_score": 0.3,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.3/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_school_3rd",
+          "name": "校级学术征文三等奖",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.2/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_college_1st",
+          "name": "院级学术征文一等奖",
+          "score": 0.3,
+          "max_score": 0.3,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "特等奖比照一等奖；合作作品个人加分为0.3/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_college_2nd",
+          "name": "院级学术征文二等奖",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.2/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_award_college_3rd",
+          "name": "院级学术征文三等奖",
+          "score": 0.1,
+          "max_score": 0.1,
+          "evidence_required": [
+            "获奖证书复印件",
+            "获奖文章"
+          ],
+          "status": "已提取",
+          "notes": "合作作品个人加分为0.1/合作人数",
+          "unit": "篇"
+        },
+        {
+          "id": "research_challenge_cup",
+          "name": "挑战杯科技竞赛获奖",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": [
+            "获奖证书复印件"
+          ],
+          "status": "已提取",
+          "notes": "比照国家级/省/校级/院级学术征文竞赛对应等级加分；合作作品个人加分=奖项加分/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "research_project_national",
+          "name": "主持国家级课题结项",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "课题结项证明",
+            "署名含海啸大学"
+          ],
+          "status": "已提取",
+          "notes": "课题过程中已发表论文/著作的，按论文/著作标准加分，不按此条",
+          "unit": "项"
+        },
+        {
+          "id": "research_project_provincial",
+          "name": "主持省级课题结项",
+          "score": 0.3,
+          "max_score": 0.3,
+          "evidence_required": [
+            "课题结项证明",
+            "署名含海啸大学"
+          ],
+          "status": "已提取",
+          "notes": "同上，已发表论文的按论文标准",
+          "unit": "项"
+        },
+        {
+          "id": "research_project_school",
+          "name": "主持校级课题结项",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": [
+            "课题结项证明",
+            "署名含海啸大学"
+          ],
+          "status": "已提取",
+          "notes": "同上，已发表论文的按论文标准",
+          "unit": "项"
+        },
+        {
+          "id": "research_project_college",
+          "name": "主持院级课题结项",
+          "score": 0.1,
+          "max_score": 0.1,
+          "evidence_required": [
+            "课题结项证明",
+            "署名含海啸大学"
+          ],
+          "status": "已提取",
+          "notes": "同上，已发表论文的按论文标准",
+          "unit": "项"
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "name": "实践能力测评加分",
+      "description": "基础分10分+加分。加分上限受学术科研加分约束，两者之和不超过10分。时间范围为上一年度9月1日至本年度8月31日，需以学生身份且署名含海啸大学。",
+      "max_score": 10.0,
+      "subcategories": [
+        {
+          "id": "practice_work_union_president",
+          "name": "校学生会/研究生会执委会主席、常代会会长",
+          "score": 1.5,
+          "max_score": 3.0,
+          "evidence_required": [
+            "任职证明/聘书",
+            "工作业绩材料"
+          ],
+          "status": "已提取",
+          "notes": "加0-1.5分，酌情加分理由充分的最高不超过3分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_union_vp",
+          "name": "校学生会/研究生会副主席、常代会副会长、校团委副部长",
+          "score": 0.75,
+          "max_score": 1.5,
+          "evidence_required": [
+            "任职证明/聘书",
+            "工作业绩材料"
+          ],
+          "status": "已提取",
+          "notes": "加0-0.75分，最高不超1.5分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_union_director",
+          "name": "校学生会/研究生会执委会、常代会各部长",
+          "score": 0.5,
+          "max_score": 1.0,
+          "evidence_required": [
+            "任职证明/聘书",
+            "工作业绩材料"
+          ],
+          "status": "已提取",
+          "notes": "加0-0.5分，最高不超1分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_club_president",
+          "name": "登记注册社团社长/团支书/理事长",
+          "score": 0.25,
+          "max_score": 0.5,
+          "evidence_required": [
+            "任职证明/聘书"
+          ],
+          "status": "已提取",
+          "notes": "加0-0.25分，最高不超0.5分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_youth_sec",
+          "name": "院团委副书记、学生党建中心副主任",
+          "score": 1.5,
+          "max_score": 3.0,
+          "evidence_required": [
+            "任职证明/聘书",
+            "工作业绩材料"
+          ],
+          "status": "已提取",
+          "notes": "加0-1.5分，最高不超3分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_president",
+          "name": "院学生会/研究生会/法律硕士联合会主席团成员、院团委各部部长、学生党建中心各部部长",
+          "score": 1.0,
+          "max_score": 2.0,
+          "evidence_required": [
+            "任职证明/聘书",
+            "工作业绩材料"
+          ],
+          "status": "已提取",
+          "notes": "加0-1分，最高不超2分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_staff_volunteer",
+          "name": "院学生会/研究生会/法律硕士联合会工作部门志愿者（合格及以上）",
+          "score": 0.1,
+          "max_score": 0.2,
+          "evidence_required": [
+            "年度述职评议结果",
+            "任职满一学年证明"
+          ],
+          "status": "已提取",
+          "notes": "完整任职满一学年且评议合格及以上；部门志愿者加0.1分，最高不超0.2分",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_staff_leader",
+          "name": "院学生会/研究生会/法律硕士联合会工作部门负责人（合格及以上）",
+          "score": 0.25,
+          "max_score": 0.35,
+          "evidence_required": [
+            "年度述职评议结果",
+            "任职满一学年证明"
+          ],
+          "status": "已提取",
+          "notes": "完整任职满一学年且评议合格及以上；部门负责人加0.25分，最高不超0.35分；最终分数由主席团确定",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_deputy",
+          "name": "院团委各部副部长、学生党建中心各部副部长",
+          "score": 0.25,
+          "max_score": 0.5,
+          "evidence_required": [
+            "任职证明/聘书"
+          ],
+          "status": "已提取",
+          "notes": "加0-0.25分，最高不超0.5分；任满一学期以上",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_college_staff_excellent",
+          "name": "院团委/学生党建中心骨干及团校学员表彰",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "表彰证书/证明"
+          ],
+          "status": "已提取",
+          "notes": "可酌情加分，最高不超0.5分",
+          "unit": "次"
+        },
+        {
+          "id": "practice_work_party_secretary",
+          "name": "学生党支部委员（含党支书）",
+          "score": 0.5,
+          "max_score": 1.0,
+          "evidence_required": [
+            "任职证明",
+            "班级民主评议结果"
+          ],
+          "status": "已提取",
+          "notes": "班主任主持民主评议：超半数满意在上段取值，基本满意在中段取值，不满意不加分；支部总分不超1分（获校级集体奖可提至2分）",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_league_secretary",
+          "name": "学生团支部委员（含团支书）",
+          "score": 0.5,
+          "max_score": 1.0,
+          "evidence_required": [
+            "任职证明",
+            "班级民主评议结果"
+          ],
+          "status": "已提取",
+          "notes": "同党支部规则；支部总分不超1分（获校级集体奖可提至2分）",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_class_committee",
+          "name": "班委会委员（含班长）",
+          "score": 0.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "任职证明",
+            "班级民主评议结果"
+          ],
+          "status": "已提取",
+          "notes": "班主任主持民主评议；班委会总分不超1.5分（获校级集体奖可提至3分）",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_grade_party",
+          "name": "年级或跨年级党支部委员",
+          "score": 0.5,
+          "max_score": 1.0,
+          "evidence_required": [
+            "任职证明"
+          ],
+          "status": "已提取",
+          "notes": "学生工作办公室酌情加分；支部总分不超1分",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_pku_law_review_editor",
+          "name": "《北大法律评论》主编",
+          "score": 0.25,
+          "max_score": 0.25,
+          "evidence_required": [
+            "任职证明"
+          ],
+          "status": "已提取",
+          "notes": "任职满一学期及以上且完成实质性工作",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_pku_law_review_deputy",
+          "name": "《北大法律评论》副主编/编辑",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": [
+            "任职证明"
+          ],
+          "status": "已提取",
+          "notes": "任职满一学期及以上且完成实质性工作",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_work_assistant",
+          "name": "学生助理/兼职（带班）辅导员",
+          "score": 0.1,
+          "max_score": 0.1,
+          "evidence_required": [
+            "任职证明",
+            "考核结果"
+          ],
+          "status": "已提取",
+          "notes": "任职满一学期以上+积极履职+考核合格及以上；不合格不加分",
+          "unit": "学年"
+        },
+        {
+          "id": "practice_event_intl_team_top3",
+          "name": "国际文艺体育赛事团体前三",
+          "score": 3.0,
+          "max_score": 3.0,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "团体项目个人加分=3/合作人数；证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_intl_team_4to8",
+          "name": "国际文艺体育赛事团体第四至八名",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "团体项目个人加分=1.5/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_intl_individual_top5",
+          "name": "国际文艺体育赛事个人前五名",
+          "score": 3.0,
+          "max_score": 3.0,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_intl_individual_6to8",
+          "name": "国际文艺体育赛事个人第六至八名",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_national_team_top3",
+          "name": "国家级文艺体育赛事团体前三",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "团体项目个人加分=1.5/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_national_team_4to8",
+          "name": "国家级文艺体育赛事团体第四至八名",
+          "score": 0.7,
+          "max_score": 0.7,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "团体项目个人加分=0.7/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_national_individual_top5",
+          "name": "国家级文艺体育赛事个人前五名",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_national_individual_6to8",
+          "name": "国家级文艺体育赛事个人第六至八名",
+          "score": 0.7,
+          "max_score": 0.7,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_provincial_team_1st",
+          "name": "省部级文艺体育赛事团体第一名",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "团体项目个人加分=1/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_provincial_team_2nd3rd",
+          "name": "省部级文艺体育赛事团体第二至三名",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "团体项目个人加分=0.5/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_provincial_individual_1st",
+          "name": "省部级文艺体育赛事个人第一名",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_provincial_individual_2nd5th",
+          "name": "省部级文艺体育赛事个人第二至五名",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_school_team_1st",
+          "name": "校级文艺体育赛事团体第一名",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "团体项目个人加分=0.5/合作人数；仅限官方正式举办、面向全校、代表x学院身份的活动",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_school_team_2nd3rd",
+          "name": "校级文艺体育赛事团体第二至三名",
+          "score": 0.25,
+          "max_score": 0.25,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "团体项目个人加分=0.25/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_school_individual_1st",
+          "name": "校级文艺体育赛事个人第一名",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_school_individual_2nd5th",
+          "name": "校级文艺体育赛事个人第二至五名",
+          "score": 0.25,
+          "max_score": 0.25,
+          "evidence_required": [
+            "获奖证书复印件",
+            "署名含海啸大学/x学院"
+          ],
+          "status": "已提取",
+          "notes": "证书签章须为海啸大学或授权代章单位",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_other_national",
+          "name": "辩论赛/模拟法庭/模拟并购等其他赛事（国家级）",
+          "score": 1.5,
+          "max_score": 1.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "活动证明"
+          ],
+          "status": "已提取",
+          "notes": "类推适用文艺体育赛事加分规则；团体项目个人加分=奖项加分/合作人数",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_other_provincial",
+          "name": "辩论赛/模拟法庭/模拟并购等其他赛事（省部级）",
+          "score": 1.0,
+          "max_score": 1.0,
+          "evidence_required": [
+            "获奖证书复印件",
+            "活动证明"
+          ],
+          "status": "已提取",
+          "notes": "类推适用文艺体育赛事加分规则",
+          "unit": "次"
+        },
+        {
+          "id": "practice_event_other_school",
+          "name": "辩论赛/模拟法庭/模拟并购等其他赛事（校级）",
+          "score": 0.5,
+          "max_score": 0.5,
+          "evidence_required": [
+            "获奖证书复印件",
+            "活动证明"
+          ],
+          "status": "已提取",
+          "notes": "类推适用文艺体育赛事加分规则",
+          "unit": "次"
+        },
+        {
+          "id": "practice_social_volunteer",
+          "name": "社会实践/志愿服务/公益活动/创新创业活动",
+          "score": 0.2,
+          "max_score": 0.2,
+          "evidence_required": [
+            "活动证明",
+            "志愿服务时长证明",
+            "获奖证书复印件"
+          ],
+          "status": "已提取",
+          "notes": "根据活动范围、影响力、时长、表现或成果酌情加分；四部分各部分最高不超过0.2分；每人每学年最多申报5个项目",
+          "unit": "次"
+        }
+      ]
+    }
+  ],
+  "global_constraints": [
+    {
+      "name": "学术科研与实践能力加分总和上限",
+      "description": "学术科研测评加分与实践能力测评加分之和最高不超过10分（两类基础分各10分，加分之和<=10）",
+      "category_ids": [
+        "academic_research",
+        "practice"
+      ],
+      "max_total": 10.0
+    },
+    {
+      "name": "实践活动申报上限",
+      "description": "每人每学年申报实践能力测评实践活动加分的项目最多为5个；同一届运动会或赛事中参加多个项目并获奖的，仅计算一项加分",
+      "category_ids": [
+        "practice"
+      ],
+      "max_items": 5
+    },
+    {
+      "name": "社会工作就高计算",
+      "description": "每人每学年申报符合加分规则的所有社会工作岗位，最终得分按量化得分最高的岗位计算一次",
+      "category_ids": [
+        "practice"
+      ],
+      "rule": "取最高单项"
+    },
+    {
+      "name": "同一成果只计最高分",
+      "description": "同一成果被多次发表、转载或荣获多个奖项的，只以最高分计算一次，不可累加",
+      "category_ids": [
+        "academic_research"
+      ],
+      "rule": "去重取最高"
+    },
+    {
+      "name": "用稿通知不加分",
+      "description": "用稿通知不作为加分依据，毕业年级学生除外",
+      "category_ids": [
+        "academic_research"
+      ],
+      "rule": "仅正式发表/出版"
+    },
+    {
+      "name": "与导师合作不计导师",
+      "description": "与本人导师合作的学术成果，在计算合作人数时不含导师",
+      "category_ids": [
+        "academic_research"
+      ],
+      "rule": "导师不计入合作人数"
+    }
+  ],
+  "total_structure": {
+    "basic_quality": {
+      "max": 10,
+      "type": "扣分制"
+    },
+    "academic_score": {
+      "max": 60,
+      "type": "计算制"
+    },
+    "academic_research": {
+      "base": 10,
+      "bonus_max": 10,
+      "type": "基础分+加分"
+    },
+    "practice": {
+      "base": 10,
+      "bonus_max": 10,
+      "type": "基础分+加分"
+    },
+    "total_max": 100
+  }
+}

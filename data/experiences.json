@@ -1,0 +1,232 @@
+{
+  "schema_version": "1.0",
+  "student_info": {
+    "name": "张海啸",
+    "student_id": "2022010305",
+    "grade": "本科三年级",
+    "major": "法学",
+    "student_type": "本科生",
+    "academic_gpa": "3.58",
+    "phone": "138****8888",
+    "email": "zhanghx@example.edu.cn"
+  },
+  "experiences": [
+    {
+      "id": "exp-001",
+      "name": "学年基本素质测评通过",
+      "category": "basic_quality",
+      "subcategory_id": "basic_quality_full",
+      "date": "2025-06-30",
+      "score": 10.0,
+      "status": "已归档",
+      "description": "2024-2025学年未受学校纪律处分，班级民主评议无重大问题，基本素质测评获得满分。",
+      "tags": ["基本素质", "民主评议", "必备项"],
+      "materials": [
+        "materials/基本素质/班级民主评议表.pdf",
+        "materials/基本素质/无违纪证明.pdf"
+      ],
+      "notes": "每年固定项目，需班级测评小组签字确认",
+      "achievements": "基本素质测评为满分10分，无扣分项"
+    },
+    {
+      "id": "exp-002",
+      "name": "学业成绩（GPA折合）",
+      "category": "academic_score",
+      "subcategory_id": "academic_undergrad",
+      "date": "2025-06-30",
+      "score": 53.7,
+      "status": "已归档",
+      "description": "2024-2025学年所修全部课程GPA为3.58，按公式 GPA×25×0.6 折合学业成绩得分。",
+      "tags": ["学业成绩", "GPA", "核心项"],
+      "materials": [
+        "materials/学业成绩/教务处盖章成绩单.pdf"
+      ],
+      "notes": "GPA 3.58 × 25 × 0.6 = 53.7分，专业排名约前25%",
+      "achievements": "学年GPA 3.58，专业课平均分85分以上"
+    },
+    {
+      "id": "exp-003",
+      "name": "校级优秀学术论文评选三等奖",
+      "category": "academic_research",
+      "subcategory_id": "research_award_school_3rd",
+      "date": "2024-12-15",
+      "score": 0.2,
+      "status": "已归档",
+      "description": "参加海啸大学法学院2024年度学生学术论文评选，论文《外卖骑手劳动权益保障的法律路径》获得校级三等奖。",
+      "tags": ["论文", "校级", "三等奖", "学术科研", "劳动法"],
+      "materials": [
+        "materials/学术科研/学术论文评选获奖证书.pdf",
+        "materials/学术科研/参赛论文原文.pdf"
+      ],
+      "notes": "校级三等奖加0.2分。这是本科阶段第一次独立完成学术论文，从选题到定稿历时两个月。",
+      "achievements": "独立完成一篇8000字学术论文，系统学习了劳动法与平台经济相关理论，掌握了文献检索与论文写作的基本方法"
+    },
+    {
+      "id": "exp-004",
+      "name": "CSSCI扩展版来源期刊合作论文",
+      "category": "academic_research",
+      "subcategory_id": "research_paper_cssci_ext_coauthor",
+      "date": "2025-02-28",
+      "score": 0.5,
+      "status": "待确认",
+      "description": "与学长合作在《法制与社会发展》（CSSCI扩展版）发表论文《个人信息保护合规审计制度研究》，本人为第二作者，署名单位为海啸大学法学院。",
+      "tags": ["论文", "CSSCI扩展版", "合作发表", "学术科研", "个人信息保护"],
+      "materials": [
+        "materials/学术科研/法制与社会发展论文复印件.pdf",
+        "materials/学术科研/期刊收录证明.pdf"
+      ],
+      "notes": "合作人数为2人（不含导师），个人加分=1.0/2=0.5分。需人工确认合作人数和署名排序。",
+      "achievements": "在CSSCI扩展版核心期刊参与发表学术论文，学习了个人信息保护领域的制度设计，积累了合作研究经验"
+    },
+    {
+      "id": "exp-005",
+      "name": "主持院级学生科研课题结项",
+      "category": "academic_research",
+      "subcategory_id": "research_project_college",
+      "date": "2025-05-20",
+      "score": 0.1,
+      "status": "已归档",
+      "description": "主持海啸大学法学院2024年度学生科研立项课题《网络购物退货规则的法律适用研究》，已顺利结项并通过评审。",
+      "tags": ["课题", "院级", "主持", "学术科研", "消费者权益"],
+      "materials": [
+        "materials/学术科研/院级课题立项通知书.pdf",
+        "materials/学术科研/课题结项证明.pdf",
+        "materials/学术科研/课题结项报告.pdf"
+      ],
+      "notes": "院级课题结项加0.1分。课题过程中完成文献综述和案例分析，虽未单独发表论文，但积累了独立研究经验。",
+      "achievements": "独立设计研究方案、撰写5000字结项报告，深入学习了消费者权益保护法与网络交易规则"
+    },
+    {
+      "id": "exp-006",
+      "name": "院学生会学术部部长",
+      "category": "practice",
+      "subcategory_id": "practice_work_college_president",
+      "date": "2024-09-01",
+      "score": 0.8,
+      "status": "已归档",
+      "description": "担任海啸大学法学院学生会学术部部长，负责组织学术讲座、读书分享会和考研经验交流活动，任期一学年。",
+      "tags": ["学生工作", "院级", "部长", "组织能力", "实践能力"],
+      "materials": [
+        "materials/学生工作/学生会部长聘书.pdf",
+        "materials/学生工作/年度述职报告.pdf",
+        "materials/学生工作/活动策划方案.pdf"
+      ],
+      "notes": "任满一学年且评议合格，按量化得分计算为0.8分。社会工作取最高岗位计分。",
+      "achievements": "统筹部门8名成员，一学年组织6场学术讲座、4场读书分享会，累计参与人次超500人，提升了活动策划与团队管理能力"
+    },
+    {
+      "id": "exp-007",
+      "name": "班级学习委员",
+      "category": "practice",
+      "subcategory_id": "practice_work_class_committee",
+      "date": "2024-09-01",
+      "score": 0.3,
+      "status": "已归档",
+      "description": "担任本科2022级法学班学习委员，负责课程通知传达、作业收发、师生沟通协调工作，任期一学年。班级民主评议结果为满意。",
+      "tags": ["班级工作", "学习委员", "沟通能力", "实践能力"],
+      "materials": [
+        "materials/学生工作/班委任职证明.pdf",
+        "materials/学生工作/班级民主评议表.pdf"
+      ],
+      "notes": "班级民主评议超半数满意，在上段取值范围内。社会工作只取最高分岗位，此项分数低于院学生会部长，实际综测中不叠加计算。",
+      "achievements": "一学年收发作业200余次，组织2次期末复习资料共享活动，锻炼了细致沟通与信息整合能力"
+    },
+    {
+      "id": "exp-008",
+      "name": "海啸大学法律之星模拟法庭竞赛团体亚军",
+      "category": "practice",
+      "subcategory_id": "practice_event_other_school",
+      "date": "2025-04-20",
+      "score": 0.5,
+      "status": "已归档",
+      "description": "代表法学院参加海啸大学第十七届法律之星模拟法庭竞赛，担任原告代理人，团队获得团体亚军（第二名）。",
+      "tags": ["模拟法庭", "校级", "亚军", "团队竞赛", "实践能力"],
+      "materials": [
+        "materials/竞赛/模拟法庭获奖证书.pdf",
+        "materials/竞赛/竞赛通知及赛程安排.pdf",
+        "materials/竞赛/团队名单.pdf",
+        "materials/竞赛/起诉状及代理词.pdf"
+      ],
+      "notes": "团体项目个人加分=奖项加分/合作人数。奖项加分0.5分，团队共4人，个人加分=0.5/4=0.125分。",
+      "achievements": "作为原告代理人撰写起诉状和代理词，参加庭前准备与庭审辩论，团队在校内12支队伍中获得第二名，锻炼了法律文书写作与庭辩表达能力"
+    },
+    {
+      "id": "exp-009",
+      "name": "普法进社区暑期社会实践",
+      "category": "practice",
+      "subcategory_id": "practice_social_volunteer",
+      "date": "2024-07-10",
+      "score": 0.2,
+      "status": "已归档",
+      "description": "参加法学院组织的普法进社区暑期社会实践团队，赴北京市某街道开展为期两周的法律咨询、普法宣传与纠纷调解志愿服务。",
+      "tags": ["社会实践", "志愿服务", "法律援助", "公益", "实践能力"],
+      "materials": [
+        "materials/社会实践/暑期社会实践证明.pdf",
+        "materials/社会实践/志愿服务时长证明.pdf",
+        "materials/社会实践/活动照片集.pdf",
+        "materials/社会实践/实践报告.pdf"
+      ],
+      "notes": "每人每学年最多申报5个实践活动项目。本项为第1个申报项目，已计入。团队共6人，覆盖2个社区，服务时长累计超80小时。",
+      "achievements": "为社区居民提供法律咨询40余人次，协助调解纠纷3起，撰写普法宣传手册1份，深化了对基层法律需求的理解"
+    },
+    {
+      "id": "exp-010",
+      "name": "校级运动会4×100米接力第四名",
+      "category": "practice",
+      "subcategory_id": "practice_event_school_team_2nd3rd",
+      "date": "2024-10-15",
+      "score": 0.25,
+      "status": "已归档",
+      "description": "代表法学院参加海啸大学第五十八届田径运动会男子4×100米接力比赛，担任第四棒，团队获得第四名。",
+      "tags": ["体育", "校级", "团队", "接力赛", "实践能力"],
+      "materials": [
+        "materials/竞赛/运动会秩序册及成绩公告.pdf",
+        "materials/竞赛/团队合影.jpg"
+      ],
+      "notes": "校级团体比赛4-8名推用2-3名标准加分。团体项目个人加分=0.25/4=0.0625分。虽然加分不多，但体现了全面发展。",
+      "achievements": "作为第四棒完成冲刺，团队从预赛晋级决赛并最终获得第四名，锻炼了团队协作与竞技精神"
+    },
+    {
+      "id": "exp-011",
+      "name": "法润童心普法志愿服务项目",
+      "category": "practice",
+      "subcategory_id": "practice_social_volunteer",
+      "date": "2024-11-20",
+      "score": 0.2,
+      "status": "待确认",
+      "description": "参加法学院法润童心志愿服务队，前往周边小学开展未成年人保护法主题普法宣讲，累计服务4次。",
+      "tags": ["志愿服务", "普法", "未成年人保护", "公益", "实践能力"],
+      "materials": [
+        "materials/社会实践/志愿服务证明.pdf",
+        "materials/社会实践/活动照片.pdf",
+        "materials/社会实践/宣讲课件.pdf"
+      ],
+      "notes": "每人每学年最多申报5个实践活动项目。本项为第2个申报项目，已计入。需确认是否属于社会实践/志愿服务/公益活动/创业范畴。",
+      "achievements": "面向小学生设计并讲授4场普法课程，覆盖200余名学生，锻炼了公众演讲与法律普及能力"
+    },
+    {
+      "id": "exp-012",
+      "name": "院级三好学生荣誉称号",
+      "category": "practice",
+      "subcategory_id": "practice_event_other_school",
+      "date": "2025-06-15",
+      "score": 0,
+      "status": "已归档",
+      "description": "获评2024-2025学年海啸大学法学院三好学生荣誉称号。",
+      "tags": ["荣誉称号", "三好学生", "院级"],
+      "materials": [
+        "materials/荣誉称号/三好学生证书.pdf"
+      ],
+      "notes": "荣誉称号本身在综测细则中无直接加分项，但可作为奖学金答辩和简历的重要内容。",
+      "achievements": "综合德智体美劳表现获得学院认可，体现了较为全面的个人素质"
+    }
+  ],
+  "material_drafts": [],
+  "metadata": {
+    "created_at": "2025-01-01",
+    "last_updated": "2025-09-21",
+    "total_experiences": 12,
+    "total_score_estimate": 65.358,
+    "academic_year": "2024-2025"
+  }
+}
